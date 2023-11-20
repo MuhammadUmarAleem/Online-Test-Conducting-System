@@ -13,7 +13,7 @@ class NavBar extends StatelessWidget {
         // Remove padding
         padding: EdgeInsets.zero,
         children: [
-          UserAccountsDrawerHeader(
+          const UserAccountsDrawerHeader(
             accountName: Text('User Name'),
             accountEmail: Text('example@gmail.com'),
             // currentAccountPicture: CircleAvatar(
@@ -35,23 +35,23 @@ class NavBar extends StatelessWidget {
             ),
           ),
           ListTile(
-            leading: Image.asset("assets/icons/take_exam.png", color: Color(0xff8523D9),),
-            title: Text('Access Exam', style: SideBarTextStyle,),
-            onTap: () => null,
+            leading: Image.asset("assets/icons/take_exam.png", color: const Color(0xff8523D9),),
+            title: const Text('Access Exam', style: SideBarTextStyle,),
+            onTap: () {},
           ),
           ListTile(
-            leading: Image.asset("assets/icons/exam-results.png", height: 30, color: Color(0xff8523D9),),
-            title: Text('Get Result', style: SideBarTextStyle,),
-            onTap: () => null,
+            leading: Image.asset("assets/icons/exam-results.png", height: 30, color: const Color(0xff8523D9),),
+            title: const Text('Get Result', style: SideBarTextStyle,),
+            onTap: () {},
           ),
           ListTile(
-            leading: Image.asset("assets/icons/feedback.png", color: Color(0xff8523D9),),
-            title: Text('Share Feedback', style: SideBarTextStyle),
-            onTap: () => null,
+            leading: Image.asset("assets/icons/feedback.png", color: const Color(0xff8523D9),),
+            title: const Text('Share Feedback', style: SideBarTextStyle),
+            onTap: () {},
           ),
           ListTile(
-            leading: Image.asset("assets/icons/logout.png", color: Color(0xff8523D9),),
-            title: Text('Logout', style: SideBarTextStyle,),
+            leading: Image.asset("assets/icons/logout.png", color: const Color(0xff8523D9),),
+            title: const Text('Logout', style: SideBarTextStyle,),
           ),
           // Divider(),
           // ListTile(
