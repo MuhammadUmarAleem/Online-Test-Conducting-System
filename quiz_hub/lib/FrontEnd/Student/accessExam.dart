@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:quiz_hub/FrontEnd/Exam/aiExam.dart';
 import 'package:quiz_hub/FrontEnd/WelcomePage.dart';
 import 'package:quiz_hub/models/constants.dart';
 import 'package:quiz_hub/models/NavBar.dart';
@@ -22,7 +23,7 @@ class _AccessExamState extends State<AccessExam> {
       appBar: AppBar(
         backgroundColor: Colors.white,
         centerTitle: true,
-        title: Row(
+        title: const Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             SizedBox(
@@ -35,7 +36,7 @@ class _AccessExamState extends State<AccessExam> {
             ),
           ],
         ),
-        iconTheme: IconThemeData(color: Colors.black),
+        iconTheme: const IconThemeData(color: Colors.black),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(20.0),
         ),
@@ -46,8 +47,8 @@ class _AccessExamState extends State<AccessExam> {
         children: [
           Container(
               height: 120,
-              margin: EdgeInsets.all(10.0),
-              padding: EdgeInsets.symmetric(vertical: 10.0),
+              margin: const EdgeInsets.all(10.0),
+              padding: const EdgeInsets.symmetric(vertical: 10.0),
               child: RichText(
                     text: const TextSpan(
                       text: 'Access \n',
@@ -85,8 +86,8 @@ class _AccessExamState extends State<AccessExam> {
               borderRadius: BorderRadius.circular(17),
 
             ),
-            margin: EdgeInsets.all(10.0),
-            padding: EdgeInsets.all(15.0),
+            margin: const EdgeInsets.all(10.0),
+            padding: const EdgeInsets.all(15.0),
 
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -97,11 +98,11 @@ class _AccessExamState extends State<AccessExam> {
 
                 GestureDetector(
                   onTap: (){
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => WelcomePage(),
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => AIExam(),
                     ),
                     );
                   },
-                  child:  Icon(Icons.arrow_forward, color: Colors.white, size: 40),
+                  child:  const Icon(Icons.arrow_forward, color: Colors.white, size: 40),
                 ),
 
               ],
@@ -131,8 +132,8 @@ class _AccessExamState extends State<AccessExam> {
               borderRadius: BorderRadius.circular(17),
 
             ),
-            margin: EdgeInsets.all(10.0),
-            padding: EdgeInsets.all(15.0),
+            margin: const EdgeInsets.all(10.0),
+            padding: const EdgeInsets.all(15.0),
 
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -144,11 +145,11 @@ class _AccessExamState extends State<AccessExam> {
                 //link to go to next screen
                 GestureDetector(
                   onTap: (){
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => WelcomePage(),
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => const WelcomePage(),
                     ),
                     );
                   },
-                  child:  Icon(Icons.arrow_forward, color: Colors.white, size: 40),
+                  child:  const Icon(Icons.arrow_forward, color: Colors.white, size: 40),
                 ),
 
               ],
@@ -178,8 +179,8 @@ class _AccessExamState extends State<AccessExam> {
               borderRadius: BorderRadius.circular(17),
 
             ),
-            margin: EdgeInsets.all(10.0),
-            padding: EdgeInsets.all(15.0),
+            margin: const EdgeInsets.all(10.0),
+            padding: const EdgeInsets.all(15.0),
 
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -191,11 +192,11 @@ class _AccessExamState extends State<AccessExam> {
                 //link to go to next screen
                 GestureDetector(
                   onTap: (){
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => WelcomePage(),
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => const WelcomePage(),
                     ),
                     );
                   },
-                  child:  Icon(Icons.arrow_forward, color: Colors.white, size: 40),
+                  child:  const Icon(Icons.arrow_forward, color: Colors.white, size: 40),
                 ),
 
               ],
@@ -225,8 +226,8 @@ class _AccessExamState extends State<AccessExam> {
               borderRadius: BorderRadius.circular(17),
 
             ),
-            margin: EdgeInsets.all(10.0),
-            padding: EdgeInsets.all(15.0),
+            margin: const EdgeInsets.all(10.0),
+            padding: const EdgeInsets.all(15.0),
 
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -238,11 +239,11 @@ class _AccessExamState extends State<AccessExam> {
                 //link to go to next screen
                 GestureDetector(
                   onTap: (){
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => WelcomePage(),
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => const WelcomePage(),
                     ),
                     );
                   },
-                  child:  Icon(Icons.arrow_forward, color: Colors.white, size: 40),
+                  child:  const Icon(Icons.arrow_forward, color: Colors.white, size: 40),
                 ),
 
                 // https://www.fotor.com/images/create
@@ -273,8 +274,8 @@ class _AccessExamState extends State<AccessExam> {
               borderRadius: BorderRadius.circular(17),
 
             ),
-            margin: EdgeInsets.all(10.0),
-            padding: EdgeInsets.all(15.0),
+            margin: const EdgeInsets.all(10.0),
+            padding: const EdgeInsets.all(15.0),
 
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -286,11 +287,11 @@ class _AccessExamState extends State<AccessExam> {
                 //link to go to next screen
                 GestureDetector(
                   onTap: (){
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => WelcomePage(),
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => const WelcomePage(),
                     ),
                     );
                   },
-                  child:  Icon(Icons.arrow_forward, color: Colors.white, size: 40),
+                  child:  const Icon(Icons.arrow_forward, color: Colors.white, size: 40),
                 ),
 
                 // https://www.fotor.com/images/create
@@ -300,17 +301,17 @@ class _AccessExamState extends State<AccessExam> {
 
           //link to go to next screen
           Container(
-            margin: EdgeInsets.all(10.0),
+            margin: const EdgeInsets.all(10.0),
             decoration: BoxDecoration(
               color: Colors.blue,
               borderRadius: BorderRadius.circular(20),
             ),
-            padding: EdgeInsets.symmetric(horizontal: 30),
+            padding: const EdgeInsets.symmetric(horizontal: 30),
             child: GestureDetector(
               onTap: (){
                 Navigator.pop(context);
               },
-              child:  Text('Go Back', style: NormalTextStyleWhite,),
+              child:  const Text('Go Back', style: NormalTextStyleWhite,),
             ),
           ),
 
