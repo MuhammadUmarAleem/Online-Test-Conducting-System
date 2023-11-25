@@ -1,6 +1,6 @@
 const bCrypt = require('bcrypt');
 
-const userLogin = require('../models/userSchema');
+const userLogin = require('../model/userSchema');
 
 //create user API
 async function createUser(){
@@ -37,7 +37,7 @@ async function updateUser(req, res) {
     try {
       const { id } = req.params;
       const { password } = req.body;
-      const hashPassword = await bCrypyt.hash(password, 8);
+      const hashPassword = await bCrypt.hash(password, 8);
       let updatedData = {
         firstName: req.body.firstName,
         lastName: req.body.lastName,
@@ -71,7 +71,7 @@ async function userLoginAuthentication(req, res) {
       const { email, password } = req.body;
       const user = await UserLogin.findOne({ email });
       if (user) {
-        const matchPassword = await bCrypyt.compare(password, user.password);        
+        const matchPassword = await bCrypt.compare(password, user.password);        
 
         if (matchPassword) {
           res.status(200).json("User Found");
@@ -90,12 +90,13 @@ async function userLoginAuthentication(req, res) {
 async function userLoginJsonWebToken(req, res, next) {
     try {
       const { email, password } = req.body;
-      const user = await UserLogin.findOne({ email });
-        console.log(user.password);
+    //   ;console.log(req.body)
+      const user = await userLogin.findOne({ email });
+        console.log(user.password); 
       if (!user) return res.status(404).json({ error: "User not found" });
-      const matchPassword = await bCrypyt.compare(password, user.password);
+      const matchPassword = await bCrypt.compare(password, user.password);
       
-      // console.log(matchPassword);
+      console.log(matchPassword);
       if (matchPassword) {
         var token = generateToken(user);
         return res.status(200).json({
@@ -121,8 +122,8 @@ function generateToken(user) {
     role: user.role,
     id: user.id,
   };
-  console.log(user);
-  console.log(payLoad);
+//   console.log(user);
+//   console.log(payLoad);
   const secretKey = "secret-key";
 
   const token = jwt.sign(payLoad, secretKey);

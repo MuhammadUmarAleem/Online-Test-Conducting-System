@@ -1,19 +1,18 @@
 const express = require('express');
 const app = express();
 const port = 3000;
-const cors = require('cors');
-
+const userRouter = require('./route/userRoute');
 const bodyParser = require('body-parser');
-
-app.use(bodyParser.json());
-
-const userRouter = require('./routes/userRoute');
+const morgan = require('morgan');
 
 require('./utils/db');
-
+const cors = require('cors');
+app.use(bodyParser.json());
 app.use(cors());
+app.use(morgan('dev'));
 
-app.user('/api', userRouter);
+
+app.use('/api', userRouter);
 
 app.get('/', (req, res) => {
     res.send('Login API');
