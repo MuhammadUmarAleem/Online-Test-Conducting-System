@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+
 class DB_Services{
 
   final FirebaseFirestore _firebaseFirestore = FirebaseFirestore.instance;
@@ -28,6 +29,6 @@ try{
   }
 
   getQuizData() async {
-   await _firebaseFirestore.collection("Quiz").snapshots();
+   return await _firebaseFirestore.collection("Quiz").snapshots();
   }
 }
