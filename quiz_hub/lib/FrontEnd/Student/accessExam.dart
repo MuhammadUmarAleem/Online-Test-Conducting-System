@@ -1,8 +1,11 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:quiz_hub/FrontEnd/Exam/aiExam.dart';
 import 'package:quiz_hub/FrontEnd/WelcomePage.dart';
+import 'package:quiz_hub/Services/quizDatabase.dart';
 import 'package:quiz_hub/models/constants.dart';
 import 'package:quiz_hub/models/NavBar.dart';
+import 'package:snapshot/snapshot.dart';
 
 class AccessExam extends StatefulWidget {
   const AccessExam({super.key});
@@ -14,6 +17,41 @@ class AccessExam extends StatefulWidget {
 class _AccessExamState extends State<AccessExam> {
 
   Constants constants = Constants();
+
+  FirebaseFirestore _firebaseFirestore = FirebaseFirestore.instance ;
+  // return await _firebaseFirestore.collection("Quiz").snapshots();
+
+  DB_Services databaseServices = new DB_Services();
+
+  Widget QuizList(){
+    return Expanded(
+      child: StreamBuilder(
+        stream: _firebaseFirestore.collection("Quiz").snapshots(),
+        builder: (context, snapshot){
+          if(!snapshot.hasData) {
+            return Center(child: CircularProgressIndicator());
+          }
+          final doc = snapshot.data!.docs;
+             return ListView.builder(
+                itemCount: doc.length,
+                  itemBuilder: (context, index){
+                  print(doc[index]['quizTitle']);
+                    return QuizTile(examTitle: snapshot.data!.docs[index]['quizTitle']);
+                  });
+        },
+      ),
+    );
+  }
+
+// @override
+//   void initState() {
+//   databaseServices.getQuizData().then((value){
+//     setState(() {
+//       quizStream = value;
+//     });
+//   });
+//     super.initState();
+//   }
 
   @override
   Widget build(BuildContext context) {
@@ -64,240 +102,8 @@ class _AccessExamState extends State<AccessExam> {
 
 
           //Menu Options (Access Exam)
-          Container(
-            height: 70,
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.centerLeft,
-                end: Alignment.centerRight,
-                colors: [
-                  constants.darkPurple,
-                  constants.darkPurple,
-                  constants.darkPurple,
-                  Colors.white.withOpacity(0.0),
-                ],
-              ),
-              border: Border.all(
-                  width: 2,
-                  color: Colors.grey.withOpacity(0.5)
-              ),
+          QuizList(),
 
-              color: constants.whiteBackgroundBorder,
-              borderRadius: BorderRadius.circular(17),
-
-            ),
-            margin: const EdgeInsets.all(10.0),
-            padding: const EdgeInsets.all(15.0),
-
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Container(
-                  child: Text("AI Exam", style: TextStyle(color: Colors.white.withOpacity(0.5), fontSize: 25, fontWeight: FontWeight.w600)),
-                ),
-
-                GestureDetector(
-                  onTap: (){
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => AIExam(),
-                    ),
-                    );
-                  },
-                  child:  const Icon(Icons.arrow_forward, color: Colors.white, size: 40),
-                ),
-
-              ],
-            ),
-          ),
-
-          //Menu Options (Get Result)
-          Container(
-            height: 70,
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.centerLeft,
-                end: Alignment.centerRight,
-                colors: [
-                  constants.darkPurple,
-                  constants.darkPurple,
-                  constants.darkPurple,
-                  Colors.white.withOpacity(0.0),
-                ],
-              ),
-              border: Border.all(
-                  width: 2,
-                  color: Colors.grey.withOpacity(0.5)
-              ),
-
-              color: constants.whiteBackgroundBorder,
-              borderRadius: BorderRadius.circular(17),
-
-            ),
-            margin: const EdgeInsets.all(10.0),
-            padding: const EdgeInsets.all(15.0),
-
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Container(
-                  child: Text("SE Exam", style: TextStyle(color: Colors.white.withOpacity(0.5), fontSize: 25, fontWeight: FontWeight.w600)),
-                ),
-
-                //link to go to next screen
-                GestureDetector(
-                  onTap: (){
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => const WelcomePage(),
-                    ),
-                    );
-                  },
-                  child:  const Icon(Icons.arrow_forward, color: Colors.white, size: 40),
-                ),
-
-              ],
-            ),
-          ),
-
-          //Menu Options (Share Feedback)
-          Container(
-            height: 70,
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.centerLeft,
-                end: Alignment.centerRight,
-                colors: [
-                  constants.darkPurple,
-                  constants.darkPurple,
-                  constants.darkPurple,
-                  Colors.white.withOpacity(0.0),
-                ],
-              ),
-              border: Border.all(
-                  width: 2,
-                  color: Colors.grey.withOpacity(0.5)
-              ),
-
-              color: constants.whiteBackgroundBorder,
-              borderRadius: BorderRadius.circular(17),
-
-            ),
-            margin: const EdgeInsets.all(10.0),
-            padding: const EdgeInsets.all(15.0),
-
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Container(
-                  child: Text("PPSD Exam", style: TextStyle(color: Colors.white.withOpacity(0.5), fontSize: 25, fontWeight: FontWeight.w600)),
-                ),
-
-                //link to go to next screen
-                GestureDetector(
-                  onTap: (){
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => const WelcomePage(),
-                    ),
-                    );
-                  },
-                  child:  const Icon(Icons.arrow_forward, color: Colors.white, size: 40),
-                ),
-
-              ],
-            ),
-          ),
-
-          //Menu Options (Get Result)
-          Container(
-            height: 70,
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.centerLeft,
-                end: Alignment.centerRight,
-                colors: [
-                  constants.darkPurple,
-                  constants.darkPurple,
-                  constants.darkPurple,
-                  Colors.white.withOpacity(0.0),
-                ],
-              ),
-              border: Border.all(
-                  width: 2,
-                  color: Colors.grey.withOpacity(0.5)
-              ),
-
-              color: constants.whiteBackgroundBorder,
-              borderRadius: BorderRadius.circular(17),
-
-            ),
-            margin: const EdgeInsets.all(10.0),
-            padding: const EdgeInsets.all(15.0),
-
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Container(
-                  child: Text("CN Exam", style: TextStyle(color: Colors.white.withOpacity(0.5), fontSize: 25, fontWeight: FontWeight.w600)),
-                ),
-
-                //link to go to next screen
-                GestureDetector(
-                  onTap: (){
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => const WelcomePage(),
-                    ),
-                    );
-                  },
-                  child:  const Icon(Icons.arrow_forward, color: Colors.white, size: 40),
-                ),
-
-                // https://www.fotor.com/images/create
-              ],
-            ),
-          ),
-
-          //Exam Options (MAD Exam)
-          Container(
-            height: 70,
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.centerLeft,
-                end: Alignment.centerRight,
-                colors: [
-                  constants.darkPurple,
-                  constants.darkPurple,
-                  constants.darkPurple,
-                  Colors.white.withOpacity(0.0),
-                ],
-              ),
-              border: Border.all(
-                  width: 2,
-                  color: Colors.grey.withOpacity(0.5)
-              ),
-
-              color: constants.whiteBackgroundBorder,
-              borderRadius: BorderRadius.circular(17),
-
-            ),
-            margin: const EdgeInsets.all(10.0),
-            padding: const EdgeInsets.all(15.0),
-
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Container(
-                  child: Text("MAD Exam", style: TextStyle(color: Colors.white.withOpacity(0.5), fontSize: 25, fontWeight: FontWeight.w600)),
-                ),
-
-                //link to go to next screen
-                GestureDetector(
-                  onTap: (){
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => const WelcomePage(),
-                    ),
-                    );
-                  },
-                  child:  const Icon(Icons.arrow_forward, color: Colors.white, size: 40),
-                ),
-
-                // https://www.fotor.com/images/create
-              ],
-            ),
-          ),
 
           //link to go to next screen
           Container(
@@ -313,6 +119,55 @@ class _AccessExamState extends State<AccessExam> {
               },
               child:  const Text('Go Back', style: NormalTextStyleWhite,),
             ),
+          ),
+
+        ],
+      ),
+
+    );
+  }
+}
+
+class QuizTile extends StatelessWidget {
+  final String examTitle;
+
+  QuizTile({super.key, required this.examTitle});
+
+  Constants constants = Constants();
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 70,
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.centerLeft,
+          end: Alignment.centerRight,
+          colors: [
+            constants.darkPurple,
+            constants.darkPurple,
+            constants.darkPurple,
+            Colors.white.withOpacity(0.0),
+          ],
+        ),
+        border: Border.all(
+            width: 2,
+            color: Colors.grey.withOpacity(0.5)
+        ),
+
+        color: constants.whiteBackgroundBorder,
+        borderRadius: BorderRadius.circular(17),
+
+      ),
+      margin: const EdgeInsets.all(10.0),
+      padding: const EdgeInsets.all(15.0),
+
+
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Container(
+            child: Text("$examTitle Exam", style: TextStyle(color: Colors.white.withOpacity(0.5), fontSize: 25, fontWeight: FontWeight.w600)),
           ),
 
         ],

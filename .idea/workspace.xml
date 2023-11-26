@@ -4,11 +4,43 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b47fcc26-646f-4d14-82e6-984b4c34b187" name="Changes" comment="" />
+    <list default="true" id="b47fcc26-646f-4d14-82e6-984b4c34b187" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/Online-Test-Conducting-System.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/Online-Test-Conducting-System.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Dart_Packages.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Dart_Packages.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/quiz_hub/android/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/quiz_hub/android/app/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/quiz_hub/assets/images/pen_on_paper.png" beforeDir="false" afterPath="$PROJECT_DIR$/quiz_hub/assets/images/pen_on_paper.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/quiz_hub/lib/FrontEnd/Exam/aiExam.dart" beforeDir="false" afterPath="$PROJECT_DIR$/quiz_hub/lib/FrontEnd/Exam/aiExam.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/quiz_hub/lib/FrontEnd/Student/accessExam.dart" beforeDir="false" afterPath="$PROJECT_DIR$/quiz_hub/lib/FrontEnd/Student/accessExam.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/quiz_hub/lib/FrontEnd/Student/getResult.dart" beforeDir="false" afterPath="$PROJECT_DIR$/quiz_hub/lib/FrontEnd/Student/getResult.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/quiz_hub/lib/FrontEnd/Student/shareFeedback.dart" beforeDir="false" afterPath="$PROJECT_DIR$/quiz_hub/lib/FrontEnd/Student/shareFeedback.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/quiz_hub/lib/FrontEnd/Student/studentDashboard.dart" beforeDir="false" afterPath="$PROJECT_DIR$/quiz_hub/lib/FrontEnd/Student/studentDashboard.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/quiz_hub/lib/FrontEnd/Teacher/addQuestion.dart" beforeDir="false" afterPath="$PROJECT_DIR$/quiz_hub/lib/FrontEnd/Teacher/addQuestion.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/quiz_hub/lib/FrontEnd/Teacher/createExam.dart" beforeDir="false" afterPath="$PROJECT_DIR$/quiz_hub/lib/FrontEnd/Teacher/createExam.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/quiz_hub/lib/FrontEnd/WelcomePage.dart" beforeDir="false" afterPath="$PROJECT_DIR$/quiz_hub/lib/FrontEnd/WelcomePage.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/quiz_hub/lib/FrontEnd/login.dart" beforeDir="false" afterPath="$PROJECT_DIR$/quiz_hub/lib/FrontEnd/login.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/quiz_hub/lib/FrontEnd/signup.dart" beforeDir="false" afterPath="$PROJECT_DIR$/quiz_hub/lib/FrontEnd/signup.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/quiz_hub/lib/localStorage/local_storage.dart" beforeDir="false" afterPath="$PROJECT_DIR$/quiz_hub/lib/localStorage/local_storage.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/quiz_hub/lib/main.dart" beforeDir="false" afterPath="$PROJECT_DIR$/quiz_hub/lib/main.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/quiz_hub/lib/models/optionCard.dart" beforeDir="false" afterPath="$PROJECT_DIR$/quiz_hub/lib/models/optionCard.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/quiz_hub/macos/Flutter/GeneratedPluginRegistrant.swift" beforeDir="false" afterPath="$PROJECT_DIR$/quiz_hub/macos/Flutter/GeneratedPluginRegistrant.swift" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/quiz_hub/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/quiz_hub/pubspec.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/quiz_hub/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/quiz_hub/pubspec.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/quiz_hub/windows/flutter/generated_plugin_registrant.cc" beforeDir="false" afterPath="$PROJECT_DIR$/quiz_hub/windows/flutter/generated_plugin_registrant.cc" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/quiz_hub/windows/flutter/generated_plugins.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/quiz_hub/windows/flutter/generated_plugins.cmake" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Dart File" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -21,16 +53,43 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.cidr.known.project.marker": "true",
-    "cidr.known.project.marker": "true",
-    "dart.analysis.tool.window.visible": "false",
-    "show.migrate.to.gradle.popup": "false"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.cidr.known.project.marker&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;cidr.known.project.marker&quot;: &quot;true&quot;,
+    &quot;com.android.tools.idea.devicemanager.tab&quot;: &quot;Physical&quot;,
+    &quot;com.google.services.firebase.aqiPopupShown&quot;: &quot;true&quot;,
+    &quot;dart.analysis.tool.window.visible&quot;: &quot;false&quot;,
+    &quot;io.flutter.reload.alreadyRun&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;E:/BSCS/5th_Semester_Data/SE_Lab/Project (as Developer)/Online-Test-Conducting-System/quiz_hub/assets/images&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;AndroidSdkUpdater&quot;,
+    &quot;show.migrate.to.gradle.popup&quot;: &quot;false&quot;
   }
-}]]></component>
+}</component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="E:\BSCS\5th_Semester_Data\SE_Lab\Project (as Developer)\Online-Test-Conducting-System\quiz_hub\assets\images" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="E:\BSCS\5th_Semester_Data\SE_Lab\Project (as Developer)\Online-Test-Conducting-System\quiz_hub\lib\FrontEnd\Exam" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration default="true" type="FlutterRunConfigurationType" factoryName="Flutter">
+      <option name="filePath" value="$PROJECT_DIR$/quiz_hub/lib/main.dart" />
+      <method v="2" />
+    </configuration>
+    <configuration name="main.dart" type="FlutterRunConfigurationType" factoryName="Flutter" nameIsGenerated="true">
+      <option name="filePath" value="$PROJECT_DIR$/quiz_hub/lib/main.dart" />
+      <method v="2" />
+    </configuration>
+  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -41,5 +100,16 @@
       <updated>1699259111821</updated>
     </task>
     <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
 </project>

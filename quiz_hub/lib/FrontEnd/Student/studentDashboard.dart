@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:quiz_hub/FrontEnd/Student/accessExam.dart';
+import 'package:quiz_hub/FrontEnd/Student/getResult.dart';
+import 'package:quiz_hub/FrontEnd/Student/shareFeedback.dart';
 import 'package:quiz_hub/FrontEnd/WelcomePage.dart';
 import 'package:quiz_hub/models/NavBar.dart';
 import 'package:quiz_hub/models/constants.dart';
@@ -22,7 +25,7 @@ class _studentDashboardState extends State<studentDashboard> {
       appBar: AppBar(
         backgroundColor: Colors.white,
         centerTitle: true,
-        title: Row(
+        title: const Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             SizedBox(
@@ -34,7 +37,7 @@ class _studentDashboardState extends State<studentDashboard> {
             ),
           ],
         ),
-        iconTheme: IconThemeData(color: Colors.black),
+        iconTheme: const IconThemeData(color: Colors.black),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(20.0),
         ),
@@ -47,8 +50,8 @@ class _studentDashboardState extends State<studentDashboard> {
               height: 200,
               decoration: BoxDecoration(
                 gradient: LinearGradient(
-                  begin: Alignment(0.5, 0),
-                  end: Alignment(0.5, 1.5),
+                  begin: const Alignment(0.5, 0),
+                  end: const Alignment(0.5, 1.5),
                   colors: [
                     constants.darkPurple,
                     Colors.white.withOpacity(0.0),
@@ -62,21 +65,21 @@ class _studentDashboardState extends State<studentDashboard> {
                 color: constants.whiteBackgroundBorder,
                 borderRadius: BorderRadius.circular(17),
               ),
-              margin: EdgeInsets.all(10.0),
-              padding: EdgeInsets.all(15.0),
+              margin: const EdgeInsets.all(10.0),
+              padding: const EdgeInsets.all(15.0),
               child: Row(
                 children: [
                   RichText(
-                    text: TextSpan(
+                    text: const TextSpan(
                       text: 'Learning made easy with\n',
                       style: TextStyle(fontSize: 18),
-                      children: const <TextSpan>[
+                      children: <TextSpan>[
                         TextSpan(text: 'QuizHub',
                             style: TextStyle(fontSize: 50, fontWeight: FontWeight.bold)),
                       ],
                     ),
                   ),
-                  Image(image: AssetImage("assets/images/graduation_cap_on_books_stack.png"),),
+                  const Image(image: AssetImage("assets/images/graduation_cap_on_books_stack.png"),),
                 ],
               )
           ),
@@ -104,8 +107,8 @@ class _studentDashboardState extends State<studentDashboard> {
               borderRadius: BorderRadius.circular(17),
 
             ),
-            margin: EdgeInsets.all(10.0),
-            padding: EdgeInsets.all(15.0),
+            margin: const EdgeInsets.all(10.0),
+            padding: const EdgeInsets.all(15.0),
 
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -116,11 +119,11 @@ class _studentDashboardState extends State<studentDashboard> {
 
                 GestureDetector(
                   onTap: (){
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => WelcomePage(),
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => const AccessExam(),
                     ),
                     );
                   },
-                  child:  Icon(Icons.arrow_forward, color: Colors.white, size: 50),
+                  child:  const Icon(Icons.arrow_forward, color: Colors.white, size: 50),
                 ),
 
               ],
@@ -150,8 +153,8 @@ class _studentDashboardState extends State<studentDashboard> {
               borderRadius: BorderRadius.circular(17),
 
             ),
-            margin: EdgeInsets.all(10.0),
-            padding: EdgeInsets.all(15.0),
+            margin: const EdgeInsets.all(10.0),
+            padding: const EdgeInsets.all(15.0),
 
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -163,18 +166,18 @@ class _studentDashboardState extends State<studentDashboard> {
                 //link to go to next screen
                 GestureDetector(
                   onTap: (){
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => WelcomePage(),
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => GetResult(),
                     ),
                     );
                   },
-                  child:  Icon(Icons.arrow_forward, color: Colors.white, size: 50),
+                  child:  const Icon(Icons.arrow_forward, color: Colors.white, size: 50),
                 ),
 
               ],
             ),
           ),
 
-          //Menu Options (Share Feedback)
+          //Menu Options (Get Teacher Feedback)
           Container(
             height: 80,
             decoration: BoxDecoration(
@@ -197,31 +200,31 @@ class _studentDashboardState extends State<studentDashboard> {
               borderRadius: BorderRadius.circular(17),
 
             ),
-            margin: EdgeInsets.all(10.0),
-            padding: EdgeInsets.all(15.0),
+            margin: const EdgeInsets.all(10.0),
+            padding: const EdgeInsets.all(15.0),
 
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Container(
-                  child: Text("Share Feedback", style: TextStyle(color: Colors.white.withOpacity(0.5), fontSize: 25, fontWeight: FontWeight.w600)),
+                  child: Text("Teacher's Feedback", style: TextStyle(color: Colors.white.withOpacity(0.5), fontSize: 25, fontWeight: FontWeight.w600)),
                 ),
 
                 //link to go to next screen
                 GestureDetector(
                   onTap: (){
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => WelcomePage(),
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => const ShareFeedback(),
                     ),
                     );
                   },
-                  child:  Icon(Icons.arrow_forward, color: Colors.white, size: 50),
+                  child:  const Icon(Icons.arrow_forward, color: Colors.white, size: 50),
                 ),
 
               ],
             ),
           ),
 
-          //Menu Options (Get Result)
+          //Menu Options (Logout)
           Container(
             height: 80,
             decoration: BoxDecoration(
@@ -244,24 +247,24 @@ class _studentDashboardState extends State<studentDashboard> {
               borderRadius: BorderRadius.circular(17),
 
             ),
-            margin: EdgeInsets.all(10.0),
-            padding: EdgeInsets.all(15.0),
+            margin: const EdgeInsets.all(10.0),
+            padding: const EdgeInsets.all(15.0),
 
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Container(
-                  child: Text("Get Result", style: TextStyle(color: Colors.white.withOpacity(0.5), fontSize: 25, fontWeight: FontWeight.w600)),
+                  child: Text("Logout", style: TextStyle(color: Colors.white.withOpacity(0.5), fontSize: 25, fontWeight: FontWeight.w600)),
                 ),
 
                 //link to go to next screen
                 GestureDetector(
                   onTap: (){
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => WelcomePage(),
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => const WelcomePage(),
                     ),
                     );
                   },
-                  child:  Icon(Icons.arrow_forward, color: Colors.white, size: 50),
+                  child:  const Icon(Icons.arrow_forward, color: Colors.white, size: 50),
                 ),
 
               ],

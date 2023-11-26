@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:quiz_hub/FrontEnd/Teacher/TeacherDashboard.dart';
+import 'package:quiz_hub/FrontEnd/login.dart';
 import 'package:quiz_hub/FrontEnd/signup.dart';
 import 'package:quiz_hub/models/constants.dart';
 
 class WelcomePage extends StatefulWidget {
-   WelcomePage({super.key});
+   const WelcomePage({super.key});
 
 
   @override
@@ -23,30 +25,30 @@ class _WelcomePageState extends State<WelcomePage> {
          color: constants.backGroundColor,
            borderRadius: BorderRadius.circular(17),
        ),
-        margin: EdgeInsets.all(10.0),
-        padding: EdgeInsets.all(20.0),
+        margin: const EdgeInsets.all(10.0),
+        padding: const EdgeInsets.all(20.0),
         child: Column(
           children: [
 
-            Text('QuizHub',
+            const Text('QuizHub',
             style: TextStyle(fontWeight: FontWeight.bold, fontSize: 45, color: Color(0xff8523D9)),
             ),
-            SizedBox(height: 50),
+            const SizedBox(height: 50),
 
-            Text('Online Test Conducting System',
+            const Text('Online Test Conducting System',
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600, color: Color(0xff8523D9)),
             ),
-            Text('Catalyze Learning With Ease',
+            const Text('Catalyze Learning With Ease',
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.w300, color: Color(0xff8523D9)),
             ),
-            SizedBox(height: 100),
+            const SizedBox(height: 100),
 
             //logo placement
-            Center(
+            const Center(
               child: Image(image: AssetImage('assets/images/QuizHub_Logo.png'),
                 height: 150 ,),
             ),
-            SizedBox(height: 150),
+            const SizedBox(height: 150),
 
               Container(
                 width: 250,
@@ -58,17 +60,16 @@ class _WelcomePageState extends State<WelcomePage> {
              onPressed: (){
                Navigator.push(
                  context,
-                 MaterialPageRoute(builder: (context) => SignUpScreen()),
+                 MaterialPageRoute(builder: (context) => const LoginScreen()),
                );                    },
                     style: ElevatedButton.styleFrom(
                       //Change font size
                       textStyle: const TextStyle(
                         fontSize: 22,
-                      ),
-                      primary: constants.darkPurple,
+                      ), backgroundColor: constants.darkPurple,
                       padding: const EdgeInsets.symmetric(vertical: 15),
                     ),
-                child: Row(
+                child: const Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text('Get Started'),  // Replace 'Add' with your button text

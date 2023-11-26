@@ -17,11 +17,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
     TextEditingController emailController = TextEditingController();
     TextEditingController passwordController = TextEditingController();
     TextEditingController confirmPasswordController = TextEditingController();
-    GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+    final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
     void _signUp() {
       if (_formKey.currentState!.validate()) {
-        Navigator.push(context, MaterialPageRoute(builder: (context) => LoginScreen()));
+        Navigator.push(context, MaterialPageRoute(builder: (context) => const LoginScreen()));
       }
     }
 
@@ -36,18 +36,18 @@ class _SignUpScreenState extends State<SignUpScreen> {
             color: constants.backGroundColor,
             borderRadius: BorderRadius.circular(17),
           ),
-          margin: EdgeInsets.all(10.0),
-          padding: EdgeInsets.all(15.0),
+          margin: const EdgeInsets.all(10.0),
+          padding: const EdgeInsets.all(15.0),
           child: Column(
             children: [
 
-              Text('QuizHub',
+              const Text('QuizHub',
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 45, color: Color(0xff8523D9)),
               ),
-              SizedBox(height: 25),
+              const SizedBox(height: 25),
 
               RichText(
-                text: TextSpan(
+                text: const TextSpan(
                   children: [
                     TextSpan(
                         text: "Stay Connected \n",
@@ -63,15 +63,15 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 textAlign: TextAlign.left,
               ),
 
-              SizedBox(height: 25),
+              const SizedBox(height: 25),
 
               //logo placement
-              Center(
+              const Center(
                 child: Image(image: AssetImage('assets/images/signup_illustration.png'),
                   height: 200 ,),
               ),
 
-              SizedBox(height: 30),
+              const SizedBox(height: 30),
 
         //sign up form
         Form(
@@ -82,7 +82,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
           //email input field
                             Container(
-                              padding: EdgeInsets.symmetric(horizontal: 10),
+                              padding: const EdgeInsets.symmetric(horizontal: 10),
                               decoration: BoxDecoration(
                                 color: Colors.white,
                                 borderRadius: BorderRadius.circular(5),
@@ -100,14 +100,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                       : 'Invalid Email Address';
                                 },
                                 controller: emailController,
-                                decoration: InputDecoration(
+                                decoration: const InputDecoration(
                                 hintText: "Email",
                                 ),
                               ),
                             ),
-                            SizedBox(height: 10),
+                            const SizedBox(height: 10),
               Container(
-                padding: EdgeInsets.symmetric(horizontal: 10),
+                padding: const EdgeInsets.symmetric(horizontal: 10),
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(5),
@@ -125,18 +125,18 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   },
                   controller: passwordController,
                   obscureText: true,
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     hintText: "Password",
                   ),
 
                 ),
               ),
 
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
 
           //confirm password field
           Container(
-                padding: EdgeInsets.symmetric(horizontal: 10),
+                padding: const EdgeInsets.symmetric(horizontal: 10),
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(5),
@@ -159,12 +159,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   },
                   controller: confirmPasswordController,
                   obscureText: true,
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     hintText: "Confirm Password",
                   ),
                 ),
               ),
-                            SizedBox(height: 10),
+                            const SizedBox(height: 10),
 
                             ElevatedButton(
                               onPressed: _signUp,
@@ -173,18 +173,17 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                 textStyle: const TextStyle(
                                   height: 0.7,
                                   fontSize: 22,
-                                ),
-                                primary: constants.darkPurple,
+                                ), backgroundColor: constants.darkPurple,
                                 padding: const EdgeInsets.symmetric(vertical: 15),
                               ),
-                                  child: Center(child: Text('Sign Up', style: TextStyle18,)
+                                  child: const Center(child: Text('Sign Up', style: TextStyle18,)
                                   ),
                               ),
               ],
         ),
         ),
 
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
 
               //button for going to login page
               RichText(
@@ -194,11 +193,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   children: [
                     TextSpan(
                         text: 'Login',
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontWeight: FontWeight.bold,
                         ),
                         recognizer: TapGestureRecognizer()..onTap = (){
-                          Navigator.push(context, MaterialPageRoute(builder: (context) => LoginScreen()));
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => const LoginScreen()));
                         }
                     ),
                   ],

@@ -1,7 +1,11 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:quiz_hub/FrontEnd/Student/studentDashboard.dart';
+import 'package:quiz_hub/FrontEnd/Teacher/TeacherDashboard.dart';
 import 'package:quiz_hub/FrontEnd/signup.dart';
+import 'package:quiz_hub/Services/APICalls.dart';
+import 'package:quiz_hub/models/loginResponse.dart';
+import 'package:quiz_hub/models/loginRole.dart';
 
 import '../models/constants.dart';
 
@@ -15,16 +19,30 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
 
   Constants constants = Constants();
+  APICalls loginAPI = APICalls();
 
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   TextEditingController confirmPasswordController = TextEditingController();
-  GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
-  void _login() {
+  void _login() async {
     if (_formKey.currentState!.validate()) {
-      Navigator.push(context, MaterialPageRoute(builder: (context) => studentDashboard()));
+try{
+      loginResponse response = await loginAPI.loginAPI(emailController.text, passwordController.text);
+
+      roleLogin userRole = await loginAPI.getUserRole(response.token!);
+      if(userRole.data!.role == "Admin"){
+      Navigator.push(context, MaterialPageRoute(builder: (context) => const studentDashboard()));
+      }else if(userRole.data!.role == "Teacher"){
+        Navigator.push(context, MaterialPageRoute(builder: (context) => const TeacherDashboard()));
+      }
+
+      // Navigator.push(context, MaterialPageRoute(builder: (context) => const studentDashboard()));
+    }catch(err){
+  ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(err.toString())));
     }
+}
   }
 
 
@@ -39,18 +57,18 @@ class _LoginScreenState extends State<LoginScreen> {
             color: constants.backGroundColor,
             borderRadius: BorderRadius.circular(17),
           ),
-          margin: EdgeInsets.all(10.0),
-          padding: EdgeInsets.all(15.0),
+          margin: const EdgeInsets.all(10.0),
+          padding: const EdgeInsets.all(15.0),
           child: Column(
             children: [
 
-              Text('QuizHub',
+              const Text('QuizHub',
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 45, color: Color(0xff8523D9)),
               ),
-              SizedBox(height: 25),
+              const SizedBox(height: 25),
 
               RichText(
-                text: TextSpan(
+                text: const TextSpan(
                   children: [
                     TextSpan(
                       text: "Stay Connected \n",
@@ -66,15 +84,15 @@ class _LoginScreenState extends State<LoginScreen> {
                 textAlign: TextAlign.left,
               ),
 
-              SizedBox(height: 25),
+              const SizedBox(height: 25),
 
               //logo placement
-              Center(
+              const Center(
                 child: Image(image: AssetImage('assets/images/login_authentication.png'),
                   height: 200 ,),
               ),
 
-              SizedBox(height: 30),
+              const SizedBox(height: 30),
 
               //sign up form
               Form(
@@ -85,7 +103,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
                     //email input field
                     Container(
-                      padding: EdgeInsets.symmetric(horizontal: 10),
+                      padding: const EdgeInsets.symmetric(horizontal: 10),
                       decoration: BoxDecoration(
                         color: Colors.white,
                         borderRadius: BorderRadius.circular(5),
@@ -103,39 +121,39 @@ class _LoginScreenState extends State<LoginScreen> {
                               : 'Invalid Email Address';
                         },
                         controller: emailController,
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
                           hintText: "Email",
                         ),
                       ),
                     ),
-                    SizedBox(height: 10),
+                    const SizedBox(height: 10),
+
                     Container(
-                      padding: EdgeInsets.symmetric(horizontal: 10),
+                      padding: const EdgeInsets.symmetric(horizontal: 10),
                       decoration: BoxDecoration(
                         color: Colors.white,
                         borderRadius: BorderRadius.circular(5),
                       ),
                       child: TextFormField(
-                        keyboardType: TextInputType.emailAddress,
+                        keyboardType: TextInputType.visiblePassword,
                         textInputAction: TextInputAction.next,
                         // onChanged: (_) => _formKey.currentState?.validate(),
                         validator: (value) {
                           return value!.isEmpty
                               ? 'Please, Enter Password'
-                              : AppConstants.passwordRegex.hasMatch(value)
-                              ? null
-                              : 'Invalid Password';
+                              : null;
+                              // : 'Invalid Password';
                         },
                         controller: passwordController,
                         obscureText: true,
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
                           hintText: "Password",
                         ),
 
                       ),
                     ),
 
-                    SizedBox(height: 10),
+                    const SizedBox(height: 10),
 
                     ElevatedButton(
                       onPressed: _login,
@@ -145,18 +163,17 @@ class _LoginScreenState extends State<LoginScreen> {
                         textStyle: const TextStyle(
                           height: 0.5,
                           fontSize: 22,
-                        ),
-                        primary: constants.darkPurple,
+                        ), backgroundColor: constants.darkPurple,
                         padding: const EdgeInsets.symmetric(vertical: 15),
                       ),
-                        child: Center(child: Text('Login', style: TextStyle18,)
+                        child: const Center(child: Text('Login', style: TextStyle18,)
                         ),
                     ),
                   ],
                 ),
               ),
 
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
 
               //button for going to login page
               RichText(
@@ -166,11 +183,11 @@ class _LoginScreenState extends State<LoginScreen> {
                   children: [
                     TextSpan(
                         text: 'SignUp',
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontWeight: FontWeight.bold,
                         ),
                         recognizer: TapGestureRecognizer()..onTap = (){
-                          Navigator.push(context, MaterialPageRoute(builder: (context) => SignUpScreen()));
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => const SignUpScreen()));
                         }
                     ),
                   ],

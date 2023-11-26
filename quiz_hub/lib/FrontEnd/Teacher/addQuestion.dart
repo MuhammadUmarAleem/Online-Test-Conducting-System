@@ -20,6 +20,8 @@ class _AddQuestionState extends State<AddQuestion> {
   String? question, option1, option2, option3, option4;
 
   bool _isLoading = false;
+  int? trueOption;
+  int totalAddedQuestions = 0;
 
       DB_Services databaseServices = new DB_Services();
   // int _totalQuestions = totalQuestions;
@@ -35,6 +37,10 @@ class _AddQuestionState extends State<AddQuestion> {
         "Option2" : option2,
         "Option3" : option3,
         "Option4" : option4,
+        "CreatedAt": DateTime.now(),
+        "UpdatedAt" : DateTime.now(),
+        "Active" : true,
+        "trueAnswer" : trueOption,
       };
       await databaseServices.addQuestionData(questionMap, widget.quizId)
           .then((value) {
@@ -42,8 +48,21 @@ class _AddQuestionState extends State<AddQuestion> {
            _isLoading = false;
          });
       });
+      // Increment clicks when a question is added
+      totalAddedQuestions++;
+      // Check if the number of clicks equals totalQuestions
+      if (totalAddedQuestions == widget.totalQuestions) {
+        // Disable "Add Question" button and enable "Submit" button
+        setState(() {
+          addQuestionButtonDisabled = true;
+          submitButtonDisabled = false;
+        });
+      }
     }
   }
+
+  bool addQuestionButtonDisabled = false;
+  bool submitButtonDisabled = true;
 
   @override
   Widget build(BuildContext context) {
@@ -103,37 +122,64 @@ class _AddQuestionState extends State<AddQuestion> {
                         color: Colors.white,
                         borderRadius: BorderRadius.circular(5),
                       ),
-                      child: TextFormField(
-                        validator: (val) => val!.isEmpty ? "Enter Option 1" : null,
-                        onChanged: (opt1){
-                          option1 = opt1;
-                        },
-                        obscureText: true,
-                        decoration: const InputDecoration(
-                          hintText: "Option 1",
-                        ),
-
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: TextFormField(
+                              validator: (val) => val!.isEmpty ? "Enter Option 1" : null,
+                              onChanged: (opt1){
+                                option1 = opt1;
+                              },
+                              decoration: const InputDecoration(
+                                hintText: "Option 1",
+                              ),
+                            ),
+                          ),
+                          Radio(
+                            value: 1,
+                            groupValue: trueOption,
+                            onChanged: (value) {
+                              setState(() {
+                                trueOption = value;
+                              });
+                            },
+                          ),
+                        ],
                       ),
                     ),
 
                     const SizedBox(height: 10),
 
-                    //Option 2:
+                    //Option 2
                     Container(
                       padding: const EdgeInsets.symmetric(horizontal: 10),
                       decoration: BoxDecoration(
                         color: Colors.white,
                         borderRadius: BorderRadius.circular(5),
                       ),
-                      child: TextFormField(
-                        validator: (val) => val!.isEmpty ? "Enter Option 2" : null,
-                        onChanged: (opt2){
-                          option2 = opt2;
-                        },
-                        obscureText: true,
-                        decoration: const InputDecoration(
-                          hintText: "Option 2",
-                        ),
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: TextFormField(
+                              validator: (val) => val!.isEmpty ? "Enter Option 2" : null,
+                              onChanged: (opt2){
+                                option2 = opt2;
+                              },
+                              decoration: const InputDecoration(
+                                hintText: "Option 2",
+                              ),
+                            ),
+                          ),
+                          Radio(
+                            value: 2,
+                            groupValue: trueOption,
+                            onChanged: (value) {
+                              setState(() {
+                                trueOption = value;
+                              });
+                            },
+                          ),
+                        ],
                       ),
                     ),
 
@@ -146,16 +192,29 @@ class _AddQuestionState extends State<AddQuestion> {
                         color: Colors.white,
                         borderRadius: BorderRadius.circular(5),
                       ),
-                      child: TextFormField(
-                        validator: (val) => val!.isEmpty ? "Enter Option 3" : null,
-                        onChanged: (opt3){
-                          option3 = opt3;
-                        },
-                        obscureText: true,
-                        decoration: const InputDecoration(
-                          hintText: "Option 3",
-                        ),
-
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: TextFormField(
+                              validator: (val) => val!.isEmpty ? "Enter Option 3" : null,
+                              onChanged: (opt3){
+                                option3 = opt3;
+                              },
+                              decoration: const InputDecoration(
+                                hintText: "Option 3",
+                              ),
+                            ),
+                          ),
+                          Radio(
+                            value: 3,
+                            groupValue: trueOption,
+                            onChanged: (value) {
+                              setState(() {
+                                trueOption = value;
+                              });
+                            },
+                          ),
+                        ],
                       ),
                     ),
 
@@ -168,27 +227,42 @@ class _AddQuestionState extends State<AddQuestion> {
                         color: Colors.white,
                         borderRadius: BorderRadius.circular(5),
                       ),
-                      child: TextFormField(
-                        validator: (val) => val!.isEmpty ? "Enter Option 4" : null,
-                        onChanged: (opt4){
-                          option4 = opt4;
-                        },
-                        obscureText: true,
-                        decoration: const InputDecoration(
-                          hintText: "Option 4",
-                        ),
-
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: TextFormField(
+                              validator: (val) => val!.isEmpty ? "Enter Option 4" : null,
+                              onChanged: (opt4){
+                                option4 = opt4;
+                              },
+                              decoration: const InputDecoration(
+                                hintText: "Option 4",
+                              ),
+                            ),
+                          ),
+                          Radio(
+                            value: 4,
+                            groupValue: trueOption,
+                            onChanged: (value) {
+                              setState(() {
+                                trueOption = value;
+                              });
+                            },
+                          ),
+                        ],
                       ),
                     ),
+
                     SizedBox(height: 10),
 
                     Row(
                       children: [
                         //submit exam button
-                        if(widget.totalQuestions ==    )
+                        // if(widget.totalQuestions ==    )
                         GestureDetector(
                           onTap: (){
-                            UploadQuizData();
+                            submitButtonDisabled ? null :
+                            Navigator.pop(context);
                           },
                           child:  Container(
                               alignment: Alignment.center,
@@ -207,7 +281,7 @@ class _AddQuestionState extends State<AddQuestion> {
                         //Add Question button
                         GestureDetector(
                           onTap: (){
-                            UploadQuestion();
+                            addQuestionButtonDisabled ? null : UploadQuestion();
                           },
                           child:  Container(
                               alignment: Alignment.center,
