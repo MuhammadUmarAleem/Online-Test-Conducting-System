@@ -4,7 +4,6 @@ import 'package:quiz_hub/models/constants.dart';
 import 'package:quiz_hub/models/NavBar.dart';
 
 class GetResult extends StatelessWidget {
-
   GetResult({super.key });
 
 

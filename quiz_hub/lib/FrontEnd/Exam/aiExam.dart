@@ -9,8 +9,10 @@ import 'package:quiz_hub/models/questionModel.dart';
 import 'package:quiz_hub/FrontEnd/Student/getResult.dart';
 
 class AIExam extends StatefulWidget {
-  const AIExam({super.key});
 
+  final String quizId;
+
+  const AIExam({super.key, required this.quizId});
   @override
   State<AIExam> createState() => _AIExamState();
 }

@@ -20,7 +20,8 @@ class _AddQuestionState extends State<AddQuestion> {
   String? question, option1, option2, option3, option4;
 
   bool _isLoading = false;
-  int? trueOption;
+  String? trueOption;
+  int? radioOption;
   int totalAddedQuestions = 0;
 
       DB_Services databaseServices = new DB_Services();
@@ -137,10 +138,11 @@ class _AddQuestionState extends State<AddQuestion> {
                           ),
                           Radio(
                             value: 1,
-                            groupValue: trueOption,
+                            groupValue: radioOption,
                             onChanged: (value) {
                               setState(() {
-                                trueOption = value;
+                                radioOption = value;
+                                trueOption = option1;
                               });
                             },
                           ),
@@ -172,10 +174,11 @@ class _AddQuestionState extends State<AddQuestion> {
                           ),
                           Radio(
                             value: 2,
-                            groupValue: trueOption,
+                            groupValue: radioOption,
                             onChanged: (value) {
                               setState(() {
-                                trueOption = value;
+                                radioOption = value;
+                                trueOption = option2;
                               });
                             },
                           ),
@@ -207,10 +210,11 @@ class _AddQuestionState extends State<AddQuestion> {
                           ),
                           Radio(
                             value: 3,
-                            groupValue: trueOption,
+                            groupValue: radioOption,
                             onChanged: (value) {
                               setState(() {
-                                trueOption = value;
+                                radioOption = value;
+                                trueOption = option3;
                               });
                             },
                           ),
@@ -242,10 +246,11 @@ class _AddQuestionState extends State<AddQuestion> {
                           ),
                           Radio(
                             value: 4,
-                            groupValue: trueOption,
+                            groupValue: radioOption,
                             onChanged: (value) {
                               setState(() {
-                                trueOption = value;
+                                radioOption = value;
+                                trueOption = option4;
                               });
                             },
                           ),

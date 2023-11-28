@@ -1,157 +1,214 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:quiz_hub/FrontEnd/Student/getResult.dart';
 import 'package:quiz_hub/Services/quizDatabase.dart';
 import 'package:quiz_hub/models/constants.dart';
 import 'package:quiz_hub/models/questionModel.dart';
+import 'QuestionWidget.dart';
+import 'dart:async';
 
 class StartExam extends StatefulWidget {
-  final String quizId;
-  const StartExam({super.key, required this.quizId});
+  final  String quizId, quizTitle;
+  final int noOfQuestions, quizDuration;
+  const StartExam({super.key,
+    required this.quizId, required this.quizTitle, required this.quizDuration, required this.noOfQuestions});
 
   @override
   State<StartExam> createState() => _StartExamState();
 }
 
 
-  int _correct = 0;
-  int _incorrect = 0;
-  int _notAttempted = 0;
-  int total = 0;
-
-  /// Stream
+  int currentQuestionIndex = 0;
+  int totalScore = 0;
+int scoreValue = 0;
   Stream? infoStream;
+
 class _StartExamState extends State<StartExam> {
 
-  QuerySnapshot? questionSnaphot;
-  DB_Services databaseService = new DB_Services();
+  Constants constants = Constants();
+  bool _isLoading = true; // Set to true initially to show a loading indicator
+  List<Map<String, dynamic>> questions = [];
+  DB_Services databaseServices = new DB_Services();
+  QuerySnapshot? questionSnapshot;
 
-  bool isLoading = true;
+  // Add more variables to store other quiz details if needed
+  late Timer _timer;
 
-  @override
-  void initState() {
-  databaseService.getQuizQuestions(widget.quizId).then((value) {
-  questionSnaphot = value;
-  _notAttempted = questionSnaphot!.docs.length;
-  _correct = 0;
-  _incorrect = 0;
-  isLoading = false;
-  total = questionSnaphot!.docs.length;
-  setState(() {});
-  print("init don $total ${widget.quizId} ");
-  });
-
-  if(infoStream == null){
-  infoStream = Stream<List<int>>.periodic(
-  Duration(milliseconds: 100), (x){
-  print("this is x $x");
-  return [_correct, _incorrect] ;
-  });
+  void nextQuestion(index, length){
+    if(index < length){
+      setState(() {
+        currentQuestionIndex++;
+      });
+    }
   }
 
-  super.initState();
+  //set time duration for quiz
+  void startTimer() {
+    _timer = Timer.periodic(Duration(seconds: 1), (Timer timer) {
+      int _remainingTimeInSeconds = widget.quizDuration;
+      setState(() {
+        if (_remainingTimeInSeconds > 0) {
+          _remainingTimeInSeconds--;
+        } else {
+          // Time is over, automatically submit the quiz
+          // submitQuiz();
+        }
+      });
+    });
   }
 
 
-  QuestionModel getQuestionModelFromDatasnapshot(
-  DocumentSnapshot questionSnapshot) {
-  QuestionModel questionModel = new QuestionModel(indexAction: indexAction, question: question, totalQuestions: totalQuestions);
+  void loadQuizQuestions() async{
+    // Fetch quiz questions from Firestore using quizId
+    QuerySnapshot<Map<String, dynamic>> snapShot = await databaseServices.getQuizQuestions(widget.quizId);
+    questions = snapShot.docs.map((doc) => doc.data()).toList();
+    setState(() {
 
-  questionModel.question = questionSnapshot.data["question"];
-
-  /// shuffling the options
-  List<String> options = [
-  questionSnapshot.data["option1"],
-  questionSnapshot.data["option2"],
-  questionSnapshot.data["option3"],
-  questionSnapshot.data["option4"]
-  ];
-  options.shuffle();
-
-  questionModel.option1 = options[0];
-  questionModel.option2 = options[1];
-  questionModel.option3 = options[2];
-  questionModel.option4 = options[3];
-  questionModel.correctOption = questionSnapshot.data["option1"];
-  questionModel.answered = false;
-
-  print(questionModel.correctOption.toLowerCase());
-
-  return questionModel;
+    });
+    // print();
   }
+
 
   @override
   void dispose() {
-  infoStream = null;
-  super.dispose();
+    infoStream = null;
+    super.dispose();
   }
 
-  Constants constants = Constants();
+  bool nextQuestionButtonDisabled = false;
+  bool submitButtonDisabled = true;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-
       backgroundColor: constants.backGroundColor,
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        centerTitle: true,
-        title: const Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            SizedBox(
-              width: 1,
-            ),
-            Image(image: AssetImage('assets/images/QuizHub_Logo.png'), height: 45),
-          ],
-        ),
-        iconTheme: const IconThemeData(color: Colors.black),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(20.0),
-        ),
-        actions: [
-          Padding(padding: const EdgeInsets.all(18.0),
-            child: Text("Marks: $score", style: scoreTextStyle,),),
-        ],
-
-      ),
-
-      body: Container(
-        margin: const EdgeInsets.all(15.0),
+      body: SafeArea(
         child: Column(
           children: [
-            const Image(image: AssetImage("assets/images/pen_on_paper.png"), height: 150,),
-            Container(
-              padding: const EdgeInsets.symmetric(vertical: 10.0),
-              margin: const EdgeInsets.only(bottom: 10),
-              child: const Text("AI Exam", style: HeadingStyle2,),
-            ),
+            Image(image: AssetImage("assets/images/pen_on_paper.png"), height: 150,),
+            SizedBox(height: 20,),
+            Text("${widget.quizTitle} Exam", style: HeadingStyle2,),
+            SizedBox(height: 25,),
+            Padding(
+              padding: const EdgeInsets.all(10),
+              child: StreamBuilder(
+                stream: databaseServices.getQuizQuestion(widget.quizId),
+                builder: (context, snapshot) {
+                  if(snapshot.connectionState == ConnectionState.waiting){
+                    return Center(child: CircularProgressIndicator(),);
+                  }else if(snapshot.hasError){
+                    return Center(child: Text(snapshot.error.toString(),),);
+                  }else{
 
-            QuestionModel(
-                indexAction: index, question: _questions[index].title, totalQuestions: _questions.length),
-            SizedBox(height: 10,),
+                    final String currentQuestion = snapshot.data!.docs[currentQuestionIndex]["Question"];
+                    final String trueAnswer = snapshot.data!.docs[currentQuestionIndex]['trueAnswer'];
+                    final options = snapshot.data!.docs;
 
-            for(int i =0; i < _questions[index].options.length; i++ )
-              GestureDetector(
-                onTap: () => checkAnswerAndUpdate(_questions[index].options.values.toList()[i]),
-                child: OptionCard(
-                  option: _questions[index].options.keys.toList()[i],
-                  onTap: () => checkAnswerAndUpdate(_questions[index].options.values.toList()[i]),
-                  isSelected: isPressed,
-                  isCorrect: _questions[index].options.values.toList()[i],
-                  // color: isPressed ? _questions[index].options.values.toList()[i] == true
-                  //     ? correctColor
-                  //     : incorrectColor : Colors.purple,
-                ),
+                    return Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      quizQuestion(question: currentQuestion,currentQuestionIndex: currentQuestionIndex, ),
+                      trueOption(prefix: "a", text: options[currentQuestionIndex]['Option1'], index: currentQuestionIndex,onTap: (){if(trueAnswer == options[currentQuestionIndex]['Option1']){scoreValue = 1;}else{scoreValue = 0;} }),
+                      trueOption(prefix: "b", text: options[currentQuestionIndex]['Option2'], index: currentQuestionIndex,onTap: (){if(trueAnswer == options[currentQuestionIndex]['Option2']){scoreValue = 1;}else{scoreValue = 0;} }),
+                      trueOption(prefix: "c", text: options[currentQuestionIndex]['Option3'], index: currentQuestionIndex,onTap: (){if(trueAnswer == options[currentQuestionIndex]['Option3']){scoreValue = 1;}else{scoreValue = 0;} }),
+                      trueOption(prefix: "d", text: options[currentQuestionIndex]['Option4'], index: currentQuestionIndex,onTap: (){if(trueAnswer == options[currentQuestionIndex]['Option4']){scoreValue = 1;}else{scoreValue = 0;} }),
+
+                      SizedBox(height: 100,),
+
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+
+                          //submit exam button
+                          // if(nextQuestionButtonDisabled)
+                         currentQuestionIndex < snapshot.data!.docs.length - 1 ?
+                          //Next Question button
+                          GestureDetector(
+                            onTap: (){
+                              totalScore = totalScore + scoreValue;
+                              print("gesture index: $currentQuestionIndex");
+                              print("total questions ${snapshot.data!.docs.length}");
+                              print("Current Score is ${totalScore}");
+                              nextQuestion(currentQuestionIndex, snapshot.data!.docs.length);
+                            },
+                            child:  Container(
+                                alignment: Alignment.center,
+                                padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+                                decoration: BoxDecoration(
+
+                                  borderRadius: BorderRadius.circular(100),
+                                  color: constants.darkPurple,
+                                ),
+                                child: Text('Next Question', style: TextStyle18,)
+                            ),
+                          )
+                             :
+                         GestureDetector(
+                           onTap: (){
+                             print('total Score is ${totalScore}');
+                             Navigator.push(context, MaterialPageRoute(builder: (context) => GetResult(),),);
+                           },
+                           child:  Container(
+                               alignment: Alignment.center,
+                               padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+                               // width: double.infinity,
+                               decoration: BoxDecoration(
+
+                                 borderRadius: BorderRadius.circular(100),
+                                 color: constants.darkPurple,
+                               ),
+                               child: Text('Submit Exam', style: TextStyle18,)
+                           ),
+                         )
+                        ],
+                      ),
+                    ],
+                  );
+                  }
+                },
               ),
+            ),
           ],
         ),
       ),
-      floatingActionButton: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 10.0),
-        child: NextButton(nextQuestion: nextQuestion,),
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+    );
+  }
+}
 
+class quizQuestion extends StatelessWidget {
+  final String question;
+  final int currentQuestionIndex;
+  const quizQuestion({super.key, required this.question, required this.currentQuestionIndex});
 
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin:const EdgeInsets.symmetric(vertical: 5, horizontal: 7),
+        child: Text('Question${currentQuestionIndex + 1}: ${question}', style: QuestionTextStyle,));
+  }
+}
+
+class trueOption extends StatelessWidget {
+  final String prefix, text;
+  final int index;
+  final Function onTap;
+  const trueOption({super.key, required this.prefix, required this.text, required this.index, required this.onTap});
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () => onTap(),
+      child: Container(
+        width: double.infinity,
+        margin: EdgeInsets.all(7),
+        decoration: BoxDecoration(
+          color: Color(0xff8523D9),
+          borderRadius: BorderRadius.circular(5.0),
+        ),
+        padding: EdgeInsets.symmetric(horizontal: 10, vertical: 7),
+        child: Text("${prefix}: ${text}", style: OptionTextStyle,),),
     );
   }
 }

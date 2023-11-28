@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:quiz_hub/FrontEnd/Exam/aiExam.dart';
+import 'package:quiz_hub/FrontEnd/Exam/playQuiz.dart';
 import 'package:quiz_hub/FrontEnd/WelcomePage.dart';
 import 'package:quiz_hub/Services/quizDatabase.dart';
 import 'package:quiz_hub/models/constants.dart';
@@ -18,15 +19,12 @@ class _AccessExamState extends State<AccessExam> {
 
   Constants constants = Constants();
 
-  FirebaseFirestore _firebaseFirestore = FirebaseFirestore.instance ;
-  // return await _firebaseFirestore.collection("Quiz").snapshots();
-
   DB_Services databaseServices = new DB_Services();
 
   Widget QuizList(){
     return Expanded(
       child: StreamBuilder(
-        stream: _firebaseFirestore.collection("Quiz").snapshots(),
+        stream: databaseServices.getQuizData(),
         builder: (context, snapshot){
           if(!snapshot.hasData) {
             return Center(child: CircularProgressIndicator());
@@ -35,8 +33,21 @@ class _AccessExamState extends State<AccessExam> {
              return ListView.builder(
                 itemCount: doc.length,
                   itemBuilder: (context, index){
-                  print(doc[index]['quizTitle']);
-                    return QuizTile(examTitle: snapshot.data!.docs[index]['quizTitle']);
+                  print("This is doc : ${doc[index]["quizDuration"]}");
+                  //     print("length of doc is: ${doc.length}");
+                    return GestureDetector(
+                        onTap: (){
+                          Navigator.push(context, MaterialPageRoute(builder: (context) =>
+                              StartExam(
+                                  quizId: doc[index]['quizId'],
+                                quizTitle: doc[index]['quizTitle'],
+                                quizDuration: doc[index]['quizDuration'],
+                                noOfQuestions: doc[index]['noOfQuestion'],
+
+                              ),), );
+                        },
+                        child: QuizTile(examTitle: doc[index]['quizTitle']),
+                        );
                   });
         },
       ),

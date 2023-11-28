@@ -5,30 +5,17 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b47fcc26-646f-4d14-82e6-984b4c34b187" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/Online-Test-Conducting-System.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/Online-Test-Conducting-System.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Dart_Packages.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Dart_Packages.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/quiz_hub/android/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/quiz_hub/android/app/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/quiz_hub/assets/images/pen_on_paper.png" beforeDir="false" afterPath="$PROJECT_DIR$/quiz_hub/assets/images/pen_on_paper.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backEnd/utils/db.js" beforeDir="false" afterPath="$PROJECT_DIR$/backEnd/utils/db.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/quiz_hub/lib/FrontEnd/Exam/QuestionWidget.dart" beforeDir="false" afterPath="$PROJECT_DIR$/quiz_hub/lib/FrontEnd/Exam/QuestionWidget.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/quiz_hub/lib/FrontEnd/Exam/aiExam.dart" beforeDir="false" afterPath="$PROJECT_DIR$/quiz_hub/lib/FrontEnd/Exam/aiExam.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/quiz_hub/lib/FrontEnd/Exam/playQuiz.dart" beforeDir="false" afterPath="$PROJECT_DIR$/quiz_hub/lib/FrontEnd/Exam/playQuiz.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/quiz_hub/lib/FrontEnd/Student/accessExam.dart" beforeDir="false" afterPath="$PROJECT_DIR$/quiz_hub/lib/FrontEnd/Student/accessExam.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/quiz_hub/lib/FrontEnd/Student/getResult.dart" beforeDir="false" afterPath="$PROJECT_DIR$/quiz_hub/lib/FrontEnd/Student/getResult.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/quiz_hub/lib/FrontEnd/Student/shareFeedback.dart" beforeDir="false" afterPath="$PROJECT_DIR$/quiz_hub/lib/FrontEnd/Student/shareFeedback.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/quiz_hub/lib/FrontEnd/Student/studentDashboard.dart" beforeDir="false" afterPath="$PROJECT_DIR$/quiz_hub/lib/FrontEnd/Student/studentDashboard.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/quiz_hub/lib/FrontEnd/Teacher/addQuestion.dart" beforeDir="false" afterPath="$PROJECT_DIR$/quiz_hub/lib/FrontEnd/Teacher/addQuestion.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/quiz_hub/lib/FrontEnd/Teacher/createExam.dart" beforeDir="false" afterPath="$PROJECT_DIR$/quiz_hub/lib/FrontEnd/Teacher/createExam.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/quiz_hub/lib/FrontEnd/WelcomePage.dart" beforeDir="false" afterPath="$PROJECT_DIR$/quiz_hub/lib/FrontEnd/WelcomePage.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/quiz_hub/lib/FrontEnd/login.dart" beforeDir="false" afterPath="$PROJECT_DIR$/quiz_hub/lib/FrontEnd/login.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/quiz_hub/lib/FrontEnd/signup.dart" beforeDir="false" afterPath="$PROJECT_DIR$/quiz_hub/lib/FrontEnd/signup.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/quiz_hub/lib/localStorage/local_storage.dart" beforeDir="false" afterPath="$PROJECT_DIR$/quiz_hub/lib/localStorage/local_storage.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/quiz_hub/lib/Services/quizDatabase.dart" beforeDir="false" afterPath="$PROJECT_DIR$/quiz_hub/lib/Services/quizDatabase.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/quiz_hub/lib/main.dart" beforeDir="false" afterPath="$PROJECT_DIR$/quiz_hub/lib/main.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/quiz_hub/lib/models/optionCard.dart" beforeDir="false" afterPath="$PROJECT_DIR$/quiz_hub/lib/models/optionCard.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/quiz_hub/macos/Flutter/GeneratedPluginRegistrant.swift" beforeDir="false" afterPath="$PROJECT_DIR$/quiz_hub/macos/Flutter/GeneratedPluginRegistrant.swift" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/quiz_hub/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/quiz_hub/pubspec.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/quiz_hub/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/quiz_hub/pubspec.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/quiz_hub/windows/flutter/generated_plugin_registrant.cc" beforeDir="false" afterPath="$PROJECT_DIR$/quiz_hub/windows/flutter/generated_plugin_registrant.cc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/quiz_hub/windows/flutter/generated_plugins.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/quiz_hub/windows/flutter/generated_plugins.cmake" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/quiz_hub/lib/models/questionModel.dart" beforeDir="false" afterPath="$PROJECT_DIR$/quiz_hub/lib/models/questionModel.dart" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

@@ -28,7 +28,15 @@ try{
     }
   }
 
-  getQuizData() async {
-   return await _firebaseFirestore.collection("Quiz").snapshots();
+  Stream<QuerySnapshot<Map<String, dynamic>>> getQuizData() {
+   return _firebaseFirestore.collection("Quiz").snapshots();
+  }
+
+  Future<QuerySnapshot<Map<String, dynamic>>> getQuizQuestions(String quizId)  async{
+   return await _firebaseFirestore.collection("Quiz")
+       .doc(quizId).collection("QnA").get();
+  }
+  Stream<QuerySnapshot<Map<String, dynamic>>> getQuizQuestion(String quizId) {
+    return _firebaseFirestore.collection("Quiz").doc(quizId).collection("QnA").snapshots();
   }
 }

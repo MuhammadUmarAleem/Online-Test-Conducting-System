@@ -1,6 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:quiz_hub/models/constants.dart';
 
+class QuestionModelNew{
+  String? question;
+  String? option1;
+  String? option2;
+  String? option3;
+  String? option4;
+  String? correctOption;
+  bool? answered;
+}
+
 class Question{
   final String id;
   final String title;

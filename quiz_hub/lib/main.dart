@@ -6,6 +6,7 @@ import 'package:quiz_hub/FrontEnd/Teacher/addQuestion.dart';
 import 'package:quiz_hub/FrontEnd/Teacher/createExam.dart';
 import 'package:quiz_hub/FrontEnd/WelcomePage.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:quiz_hub/FrontEnd/login.dart';
 import 'firebase_options.dart';
 
 void main() async{
@@ -25,7 +26,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(fontFamily: 'Poppins'),
-      home: CreateExam(
+      home: AccessExam(
       ),
     );
   }

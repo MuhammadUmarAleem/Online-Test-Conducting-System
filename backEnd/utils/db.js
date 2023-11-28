@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 mongoose.set('strictQuery', true);
 
-mongoose.connect('mongodb://127.0.0.1:27017/QuizHub', {
+mongoose.connect('mongodb+srv://bilalbisharat:kgRQcPkCtC9kUF2M@cluster0.2ixrksw.mongodb.net/', {
     useNewUrlParser: true,
     useUnifiedTopology: true,
 });
