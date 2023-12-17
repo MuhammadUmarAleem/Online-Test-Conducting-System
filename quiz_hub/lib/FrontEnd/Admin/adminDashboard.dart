@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:quiz_hub/FrontEnd/Admin/createAccount.dart';
+import 'package:quiz_hub/FrontEnd/Admin/showAllUsers.dart';
 import 'package:quiz_hub/FrontEnd/WelcomePage.dart';
 import 'package:quiz_hub/models/constants.dart';
 
@@ -40,15 +41,57 @@ class _AdminDashboardState extends State<AdminDashboard> {
 
       ),
 
-      body: Column(
-        children: [
-          Container(
-              height: 200,
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            Container(
+                height: 200,
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: const Alignment(0.5, 0),
+                    end: const Alignment(0.5, 1.5),
+                    colors: [
+                      constants.darkPurple,
+                      Colors.white.withOpacity(0.0),
+                    ],
+                  ),
+                  border: Border.all(
+                      width: 2,
+                      color: Colors.grey.withOpacity(0.5)
+                  ),
+
+                  color: constants.whiteBackgroundBorder,
+                  borderRadius: BorderRadius.circular(17),
+                ),
+                margin: const EdgeInsets.all(10.0),
+                padding: const EdgeInsets.all(15.0),
+                child: Row(
+                  children: [
+                    RichText(
+                      text: const TextSpan(
+                        text: 'Learning made easy with\n',
+                        style: TextStyle(fontSize: 18),
+                        children: <TextSpan>[
+                          TextSpan(text: 'QuizHub',
+                              style: TextStyle(fontSize: 50, fontWeight: FontWeight.bold)),
+                        ],
+                      ),
+                    ),
+                    const Image(image: AssetImage("assets/images/graduation_cap_on_books_stack.png"),),
+                  ],
+                )
+            ),
+
+            //Create Account Button
+            Container(
+              height: 70,
               decoration: BoxDecoration(
                 gradient: LinearGradient(
-                  begin: const Alignment(0.5, 0),
-                  end: const Alignment(0.5, 1.5),
+                  begin: Alignment.centerLeft,
+                  end: Alignment.centerRight,
                   colors: [
+                    constants.darkPurple,
+                    constants.darkPurple,
                     constants.darkPurple,
                     Colors.white.withOpacity(0.0),
                   ],
@@ -60,215 +103,224 @@ class _AdminDashboardState extends State<AdminDashboard> {
 
                 color: constants.whiteBackgroundBorder,
                 borderRadius: BorderRadius.circular(17),
+
               ),
-              margin: const EdgeInsets.all(10.0),
-              padding: const EdgeInsets.all(15.0),
+              margin: const EdgeInsets.all(8.0),
+              padding: const EdgeInsets.all(10.0),
+
               child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  RichText(
-                    text: const TextSpan(
-                      text: 'Learning made easy with\n',
-                      style: TextStyle(fontSize: 18),
-                      children: <TextSpan>[
-                        TextSpan(text: 'QuizHub',
-                            style: TextStyle(fontSize: 50, fontWeight: FontWeight.bold)),
-                      ],
-                    ),
+
+                  Container(
+                    child: Text("Create Account", style: TextStyle(color: Colors.white.withOpacity(0.5), fontSize: 25, fontWeight: FontWeight.w600)),
                   ),
-                  const Image(image: AssetImage("assets/images/graduation_cap_on_books_stack.png"),),
-                ],
-              )
-          ),
 
-          //Menu Options (Access Exam)
-          Container(
-            height: 80,
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.centerLeft,
-                end: Alignment.centerRight,
-                colors: [
-                  constants.darkPurple,
-                  constants.darkPurple,
-                  constants.darkPurple,
-                  Colors.white.withOpacity(0.0),
+                  GestureDetector(
+                    onTap: (){
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => CreateUserAccount(),
+                      ),
+                      );
+                    },
+                    child:  const Icon(Icons.arrow_forward, color: Colors.white, size: 50),
+                  ),
+
                 ],
               ),
-              border: Border.all(
-                  width: 2,
-                  color: Colors.grey.withOpacity(0.5)
+            ),
+
+            //Show All Accounts
+            Container(
+              height: 70,
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.centerLeft,
+                  end: Alignment.centerRight,
+                  colors: [
+                    constants.darkPurple,
+                    constants.darkPurple,
+                    constants.darkPurple,
+                    Colors.white.withOpacity(0.0),
+                  ],
+                ),
+                border: Border.all(
+                    width: 2,
+                    color: Colors.grey.withOpacity(0.5)
+                ),
+
+                color: constants.whiteBackgroundBorder,
+                borderRadius: BorderRadius.circular(17),
+
               ),
+              margin: const EdgeInsets.all(8.0),
+              padding: const EdgeInsets.all(10.0),
 
-              color: constants.whiteBackgroundBorder,
-              borderRadius: BorderRadius.circular(17),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
 
-            ),
-            margin: const EdgeInsets.all(10.0),
-            padding: const EdgeInsets.all(15.0),
+                  Container(
+                    child: Text("Show Users", style: TextStyle(color: Colors.white.withOpacity(0.5), fontSize: 25, fontWeight: FontWeight.w600)),
+                  ),
 
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Container(
-                  child: Text("Create Account", style: TextStyle(color: Colors.white.withOpacity(0.5), fontSize: 25, fontWeight: FontWeight.w600)),
-                ),
+                  GestureDetector(
+                    onTap: (){
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => ShowAllUsers(),
+                      ),
+                      );
+                    },
+                    child:  const Icon(Icons.arrow_forward, color: Colors.white, size: 50),
+                  ),
 
-                GestureDetector(
-                  onTap: (){
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => CreateUserAccount(),
-                    ),
-                    );
-                  },
-                  child:  const Icon(Icons.arrow_forward, color: Colors.white, size: 50),
-                ),
-
-              ],
-            ),
-          ),
-
-          //Menu Options (Get Result)
-          Container(
-            height: 80,
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.centerLeft,
-                end: Alignment.centerRight,
-                colors: [
-                  constants.darkPurple,
-                  constants.darkPurple,
-                  constants.darkPurple,
-                  Colors.white.withOpacity(0.0),
                 ],
               ),
-              border: Border.all(
-                  width: 2,
-                  color: Colors.grey.withOpacity(0.5)
+            ),
+
+
+            //Edit Account Button
+            Container(
+              height: 70,
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.centerLeft,
+                  end: Alignment.centerRight,
+                  colors: [
+                    constants.darkPurple,
+                    constants.darkPurple,
+                    constants.darkPurple,
+                    Colors.white.withOpacity(0.0),
+                  ],
+                ),
+                border: Border.all(
+                    width: 2,
+                    color: Colors.grey.withOpacity(0.5)
+                ),
+
+                color: constants.whiteBackgroundBorder,
+                borderRadius: BorderRadius.circular(17),
+
               ),
+              margin: const EdgeInsets.all(8.0),
+              padding: const EdgeInsets.all(10.0),
 
-              color: constants.whiteBackgroundBorder,
-              borderRadius: BorderRadius.circular(17),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Container(
+                    child: Text("Edit Account", style: TextStyle(color: Colors.white.withOpacity(0.5), fontSize: 25, fontWeight: FontWeight.w600)),
+                  ),
 
-            ),
-            margin: const EdgeInsets.all(10.0),
-            padding: const EdgeInsets.all(15.0),
+                  //link to go to next screen
+                  GestureDetector(
+                    onTap: (){
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => WelcomePage(),
+                      ),
+                      );
+                    },
+                    child:  const Icon(Icons.arrow_forward, color: Colors.white, size: 50),
+                  ),
 
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Container(
-                  child: Text("Edit Account", style: TextStyle(color: Colors.white.withOpacity(0.5), fontSize: 25, fontWeight: FontWeight.w600)),
-                ),
-
-                //link to go to next screen
-                GestureDetector(
-                  onTap: (){
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => WelcomePage(),
-                    ),
-                    );
-                  },
-                  child:  const Icon(Icons.arrow_forward, color: Colors.white, size: 50),
-                ),
-
-              ],
-            ),
-          ),
-
-          //Menu Options (Get Teacher Feedback)
-          Container(
-            height: 80,
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.centerLeft,
-                end: Alignment.centerRight,
-                colors: [
-                  constants.darkPurple,
-                  constants.darkPurple,
-                  constants.darkPurple,
-                  Colors.white.withOpacity(0.0),
                 ],
               ),
-              border: Border.all(
-                  width: 2,
-                  color: Colors.grey.withOpacity(0.5)
+            ),
+
+            //Delete Account Button
+            Container(
+              height: 70,
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.centerLeft,
+                  end: Alignment.centerRight,
+                  colors: [
+                    constants.darkPurple,
+                    constants.darkPurple,
+                    constants.darkPurple,
+                    Colors.white.withOpacity(0.0),
+                  ],
+                ),
+                border: Border.all(
+                    width: 2,
+                    color: Colors.grey.withOpacity(0.5)
+                ),
+
+                color: constants.whiteBackgroundBorder,
+                borderRadius: BorderRadius.circular(17),
+
               ),
+              margin: const EdgeInsets.all(8.0),
+              padding: const EdgeInsets.all(10.0),
 
-              color: constants.whiteBackgroundBorder,
-              borderRadius: BorderRadius.circular(17),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Container(
+                    child: Text("Delete Account", style: TextStyle(color: Colors.white.withOpacity(0.5), fontSize: 25, fontWeight: FontWeight.w600)),
+                  ),
 
-            ),
-            margin: const EdgeInsets.all(10.0),
-            padding: const EdgeInsets.all(15.0),
+                  //link to go to next screen
+                  GestureDetector(
+                    onTap: (){
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => const WelcomePage(),
+                      ),
+                      );
+                    },
+                    child:  const Icon(Icons.arrow_forward, color: Colors.white, size: 50),
+                  ),
 
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Container(
-                  child: Text("Delete Account", style: TextStyle(color: Colors.white.withOpacity(0.5), fontSize: 25, fontWeight: FontWeight.w600)),
-                ),
-
-                //link to go to next screen
-                GestureDetector(
-                  onTap: (){
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => const WelcomePage(),
-                    ),
-                    );
-                  },
-                  child:  const Icon(Icons.arrow_forward, color: Colors.white, size: 50),
-                ),
-
-              ],
-            ),
-          ),
-
-          //Menu Options (Logout)
-          Container(
-            height: 80,
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.centerLeft,
-                end: Alignment.centerRight,
-                colors: [
-                  constants.darkPurple,
-                  constants.darkPurple,
-                  constants.darkPurple,
-                  Colors.white.withOpacity(0.0),
                 ],
               ),
-              border: Border.all(
-                  width: 2,
-                  color: Colors.grey.withOpacity(0.5)
+            ),
+
+            //Menu Options (Logout)
+            Container(
+              height: 70,
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.centerLeft,
+                  end: Alignment.centerRight,
+                  colors: [
+                    constants.darkPurple,
+                    constants.darkPurple,
+                    constants.darkPurple,
+                    Colors.white.withOpacity(0.0),
+                  ],
+                ),
+                border: Border.all(
+                    width: 2,
+                    color: Colors.grey.withOpacity(0.5)
+                ),
+
+                color: constants.whiteBackgroundBorder,
+                borderRadius: BorderRadius.circular(17),
+
               ),
+              margin: const EdgeInsets.all(8.0),
+              padding: const EdgeInsets.all(10.0),
 
-              color: constants.whiteBackgroundBorder,
-              borderRadius: BorderRadius.circular(17),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Container(
+                    child: Text("Logout", style: TextStyle(color: Colors.white.withOpacity(0.5), fontSize: 25, fontWeight: FontWeight.w600)),
+                  ),
 
+                  //link to go to next screen
+                  GestureDetector(
+                    onTap: (){
+
+                      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const WelcomePage(),
+                      ),
+                      );
+                    },
+                    child:  const Icon(Icons.arrow_forward, color: Colors.white, size: 50),
+                  ),
+
+                ],
+              ),
             ),
-            margin: const EdgeInsets.all(10.0),
-            padding: const EdgeInsets.all(15.0),
 
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Container(
-                  child: Text("Logout", style: TextStyle(color: Colors.white.withOpacity(0.5), fontSize: 25, fontWeight: FontWeight.w600)),
-                ),
-
-                //link to go to next screen
-                GestureDetector(
-                  onTap: (){
-
-                    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const WelcomePage(),
-                    ),
-                    );
-                  },
-                  child:  const Icon(Icons.arrow_forward, color: Colors.white, size: 50),
-                ),
-
-              ],
-            ),
-          ),
-
-        ],
+          ],
+        ),
       ),
 
     );

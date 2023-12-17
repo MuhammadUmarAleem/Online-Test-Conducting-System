@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:quiz_hub/FrontEnd/Student/studentDashboard.dart';
+import 'package:quiz_hub/FrontEnd/Teacher/TeacherDashboard.dart';
 import 'package:quiz_hub/models/constants.dart';
 
 import '../../Services/quizDatabase.dart';
@@ -56,22 +57,34 @@ class _ReviewSubjectWiseResultState extends State<ReviewSubjectWiseResult> {
                               final quizScore = data[index]["QuizScore"];
                               final studentScore = data[index]["StudentScore"];
 
-                              return DataTable(
-                                columns: [
-                                  DataColumn(label: Text('Sr.')),
-                                  DataColumn(label: Text('Student Registration')),
-                                  DataColumn(label: Text('Quiz Marks')),
-                                  DataColumn(label: Text('Student Marks')),
-                                ],
-                                rows: [
-                                  DataRow(cells: [
-
-                                    DataCell(Text((index + 1).toString())),
-                                    DataCell(Text('${data[index]["StudentRollNo"]}')),
-                                    DataCell(Text('${data[index]["QuizScore"]}')),
-                                    DataCell(Text('${data[index]["StudentScore"]}')),
-                                  ]),
-                                ],
+                              return Container(
+                                decoration: BoxDecoration(
+                                  border: Border.all(
+                                    color: constants.darkPurple,
+                                    width: 1,
+                                  ),
+                                  borderRadius: BorderRadius.circular(5),
+                                ),
+                                child: SingleChildScrollView(
+                                  scrollDirection: Axis.horizontal,
+                                  child: DataTable(
+                                    columnSpacing: 10,
+                                    columns: [
+                                      DataColumn(label: Text('Sr.', style: TableHeadingTextStyle2,)),
+                                      DataColumn(label: Text('Student Registration', style: TableHeadingTextStyle2)),
+                                      DataColumn(label: Text('Quiz Marks', style: TableHeadingTextStyle2)),
+                                      DataColumn(label: Text('Student Marks', style: TableHeadingTextStyle2)),
+                                    ],
+                                    rows: [
+                                      DataRow(cells: [
+                                        DataCell(Text((index + 1).toString(), style: TableCellsTextStyle)),
+                                        DataCell(Text('${data[index]["StudentRollNo"]}', style: TableCellsTextStyle)),
+                                        DataCell(Text('${data[index]["QuizScore"]}', style: TableCellsTextStyle)),
+                                        DataCell(Text('${data[index]["StudentScore"]}', style: TableCellsTextStyle)),
+                                      ]),
+                                    ],
+                                  ),
+                                ),
                               );
                             }),
                       );
@@ -84,7 +97,7 @@ class _ReviewSubjectWiseResultState extends State<ReviewSubjectWiseResult> {
               //Back button
               GestureDetector(
                 onTap: (){
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => studentDashboard()));
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => TeacherDashboard()));
                 },
                 child:  Container(
                     margin: EdgeInsets.symmetric(horizontal: 20),

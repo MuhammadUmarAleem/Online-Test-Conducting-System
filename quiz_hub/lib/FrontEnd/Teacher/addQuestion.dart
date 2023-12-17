@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:quiz_hub/FrontEnd/Teacher/TeacherDashboard.dart';
 import 'package:quiz_hub/Services/quizDatabase.dart';
 import 'package:quiz_hub/models/constants.dart';
 
@@ -267,7 +268,7 @@ class _AddQuestionState extends State<AddQuestion> {
                         GestureDetector(
                           onTap: (){
                             submitButtonDisabled ? null :
-                            Navigator.pop(context);
+                            Navigator.push(context, MaterialPageRoute(builder: (context) => TeacherDashboard(),),);
                           },
                           child:  Container(
                               alignment: Alignment.center,

@@ -3,9 +3,11 @@ import 'package:quiz_hub/FrontEnd/Student/accessExam.dart';
 import 'package:quiz_hub/FrontEnd/Student/getResult.dart';
 import 'package:quiz_hub/FrontEnd/Student/shareFeedback.dart';
 import 'package:quiz_hub/FrontEnd/Teacher/createExam.dart';
+import 'package:quiz_hub/FrontEnd/Teacher/reviewResults.dart';
 import 'package:quiz_hub/FrontEnd/WelcomePage.dart';
 import 'package:quiz_hub/models/constants.dart';
 import 'package:quiz_hub/models/NavBar.dart';
+import 'package:quiz_hub/models/navBarTeacher.dart';
 
 class TeacherDashboard extends StatefulWidget {
   const TeacherDashboard({super.key});
@@ -21,8 +23,8 @@ class _TeacherDashboardState extends State<TeacherDashboard> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: TeacherNavBar(),
       backgroundColor: constants.backGroundColor,
-      drawer: NavBar(),
       appBar: AppBar(
         backgroundColor: Colors.white,
         centerTitle: true,
@@ -88,7 +90,7 @@ class _TeacherDashboardState extends State<TeacherDashboard> {
 
             //Menu Options (Create Exam)
             Container(
-              height: 50,
+              height: 60,
               decoration: BoxDecoration(
                 gradient: LinearGradient(
                   begin: Alignment.centerLeft,
@@ -130,7 +132,7 @@ class _TeacherDashboardState extends State<TeacherDashboard> {
 
             //Menu Options (Edit Exam)
             Container(
-              height: 50,
+              height: 60,
               decoration: BoxDecoration(
                 gradient: LinearGradient(
                   begin: Alignment.centerLeft,
@@ -171,56 +173,9 @@ class _TeacherDashboardState extends State<TeacherDashboard> {
               ),
             ),
 
-            //Menu Options (Schedule Exam)
-            Container(
-              height: 50,
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  begin: Alignment.centerLeft,
-                  end: Alignment.centerRight,
-                  colors: [
-                    constants.darkPurple,
-                    constants.darkPurple,
-                    constants.darkPurple,
-                    Colors.white.withOpacity(0.0),
-                  ],
-                ),
-                border: Border.all(
-                    width: 2,
-                    color: Colors.grey.withOpacity(0.5)
-                ),
-
-                color: constants.whiteBackgroundBorder,
-                borderRadius: BorderRadius.circular(10),
-
-              ),
-              margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 7),
-              padding: const EdgeInsets.symmetric(horizontal: 15.0),
-
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Container(
-                    child: Text("Schedule Exam", style: TextStyle(color: Colors.white.withOpacity(0.5), fontSize: 25, fontWeight: FontWeight.w600)),
-                  ),
-
-                  //link to go to next screen
-                  GestureDetector(
-                    onTap: (){
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => const ShareFeedback(),
-                      ),
-                      );
-                    },
-                    child:  const Icon(Icons.arrow_forward, color: Colors.white, size: 50),
-                  ),
-
-                ],
-              ),
-            ),
-
             //Menu Options (Review Result)
             Container(
-              height: 50,
+              height: 60,
               decoration: BoxDecoration(
                 gradient: LinearGradient(
                   begin: Alignment.centerLeft,
@@ -231,10 +186,6 @@ class _TeacherDashboardState extends State<TeacherDashboard> {
                     constants.darkPurple,
                     Colors.white.withOpacity(0.0),
                   ],
-                ),
-                border: Border.all(
-                    width: 2,
-                    color: Colors.grey.withOpacity(0.5)
                 ),
 
                 color: constants.whiteBackgroundBorder,
@@ -254,7 +205,7 @@ class _TeacherDashboardState extends State<TeacherDashboard> {
                   //link to go to next screen
                   GestureDetector(
                     onTap: (){
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => const WelcomePage(),
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => ReviewResultsByTeacher(),
                       ),
                       );
                     },
@@ -267,7 +218,7 @@ class _TeacherDashboardState extends State<TeacherDashboard> {
 
             //Menu Options (Provide Feedback)
             Container(
-              height: 50,
+              height: 60,
               decoration: BoxDecoration(
                 gradient: LinearGradient(
                   begin: Alignment.centerLeft,
@@ -278,10 +229,6 @@ class _TeacherDashboardState extends State<TeacherDashboard> {
                     constants.darkPurple,
                     Colors.white.withOpacity(0.0),
                   ],
-                ),
-                border: Border.all(
-                    width: 2,
-                    color: Colors.grey.withOpacity(0.5)
                 ),
 
                 color: constants.whiteBackgroundBorder,
@@ -314,7 +261,7 @@ class _TeacherDashboardState extends State<TeacherDashboard> {
 
             //Menu Options (Access Report)
             Container(
-              height: 50,
+              height: 60,
               decoration: BoxDecoration(
                 gradient: LinearGradient(
                   begin: Alignment.centerLeft,
@@ -325,10 +272,6 @@ class _TeacherDashboardState extends State<TeacherDashboard> {
                     constants.darkPurple,
                     Colors.white.withOpacity(0.0),
                   ],
-                ),
-                border: Border.all(
-                    width: 2,
-                    color: Colors.grey.withOpacity(0.5)
                 ),
 
                 color: constants.whiteBackgroundBorder,
@@ -343,6 +286,49 @@ class _TeacherDashboardState extends State<TeacherDashboard> {
                 children: [
                   Container(
                     child: Text("Access Report", style: TextStyle(color: Colors.white.withOpacity(0.5), fontSize: 25, fontWeight: FontWeight.w600)),
+                  ),
+
+                  //link to go to next screen
+                  GestureDetector(
+                    onTap: (){
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => const WelcomePage(),
+                      ),
+                      );
+                    },
+                    child:  const Icon(Icons.arrow_forward, color: Colors.white, size: 50),
+                  ),
+
+                ],
+              ),
+            ),
+
+            //Menu Options (Schedule Exam)
+            Container(
+              height: 60,
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.centerLeft,
+                  end: Alignment.centerRight,
+                  colors: [
+                    constants.darkPurple,
+                    constants.darkPurple,
+                    constants.darkPurple,
+                    Colors.white.withOpacity(0.0),
+                  ],
+                ),
+
+                color: constants.whiteBackgroundBorder,
+                borderRadius: BorderRadius.circular(10),
+
+              ),
+              margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 7),
+              padding: const EdgeInsets.symmetric(horizontal: 15.0),
+
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Container(
+                    child: Text("Logout", style: TextStyle(color: Colors.white.withOpacity(0.5), fontSize: 25, fontWeight: FontWeight.w600)),
                   ),
 
                   //link to go to next screen

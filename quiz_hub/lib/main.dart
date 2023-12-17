@@ -1,5 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:quiz_hub/FrontEnd/Admin/adminDashboard.dart';
+import 'package:quiz_hub/FrontEnd/Admin/createAccount.dart';
+import 'package:quiz_hub/FrontEnd/Admin/showAllUsers.dart';
+import 'package:quiz_hub/FrontEnd/Exam/submitResponse.dart';
 import 'package:quiz_hub/FrontEnd/Student/accessExam.dart';
+import 'package:quiz_hub/FrontEnd/Student/getResult.dart';
+import 'package:quiz_hub/FrontEnd/Student/getTeacherFeedback.dart';
+import 'package:quiz_hub/FrontEnd/Student/shareFeedback.dart';
 import 'package:quiz_hub/FrontEnd/Student/studentDashboard.dart';
 import 'package:quiz_hub/FrontEnd/Teacher/TeacherDashboard.dart';
 import 'package:quiz_hub/FrontEnd/Teacher/addQuestion.dart';
@@ -7,6 +14,7 @@ import 'package:quiz_hub/FrontEnd/Teacher/createExam.dart';
 import 'package:quiz_hub/FrontEnd/WelcomePage.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:quiz_hub/FrontEnd/login.dart';
+import 'FrontEnd/signup.dart';
 import 'firebase_options.dart';
 
 void main() async{
@@ -26,7 +34,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(fontFamily: 'Poppins'),
-      home: AccessExam(
+      home: WelcomePage(
       ),
     );
   }

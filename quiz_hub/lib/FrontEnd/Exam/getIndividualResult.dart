@@ -56,7 +56,7 @@ class _getIndResultState extends State<getIndResult> {
               GestureDetector(
                 onTap: (){
                   Navigator.push(context, MaterialPageRoute(builder: (context) => SubmitExamResponse(
-                     quizId: widget.quizId, quizTitle: widget.quizTitle, noOfQuestions: widget.noOfQuestions, quizScore: totalScore),),);
+                     quizId: widget.quizId, quizTitle: widget.quizTitle, noOfQuestions: widget.noOfQuestions, quizScore: widget.trueAnswers * 10, quizTotalScore: widget.noOfQuestions * 10),),);
                 },
                 child:  Container(
                   margin: EdgeInsets.symmetric(horizontal: 20),

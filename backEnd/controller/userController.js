@@ -3,7 +3,7 @@ const bCrypt = require('bcrypt');
 const userLogin = require('../model/userSchema');
 
 //create user API
-async function createUser(){
+async function createUser(req, res) {
     try{
             const {password} = req.body;
             const hashPassword = await bCrypt.hash(password, 8);
@@ -11,6 +11,7 @@ async function createUser(){
                 firstName : req.body.firstName,
                 lastName : req.body.lastName,
                 email : req.body.email,
+                rollNo: req.body.rollNo,
                 password: hashPassword,
                 role: req.body.role,
             }
@@ -23,7 +24,7 @@ async function createUser(){
 }
 
 //API for getting all the users
-async function getAllUsers(){
+async function getAllUsers(req,res){
     try{
         const getAllUsers = await userLogin.find();
         res.json(getAllUsers);
@@ -103,6 +104,7 @@ async function userLoginJsonWebToken(req, res, next) {
           message: "Logged in Successfully",
           email: email,
           name: user.firstName,
+          rollNo: user.rollNo,
           userId: user.id,
           token: token,
         });

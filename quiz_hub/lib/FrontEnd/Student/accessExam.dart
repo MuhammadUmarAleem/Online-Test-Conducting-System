@@ -1,12 +1,9 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:quiz_hub/FrontEnd/Exam/aiExam.dart';
 import 'package:quiz_hub/FrontEnd/Exam/playQuiz.dart';
-import 'package:quiz_hub/FrontEnd/WelcomePage.dart';
 import 'package:quiz_hub/Services/quizDatabase.dart';
+import 'package:quiz_hub/localStorage/local_storage.dart';
 import 'package:quiz_hub/models/constants.dart';
 import 'package:quiz_hub/models/NavBar.dart';
-import 'package:snapshot/snapshot.dart';
 
 class AccessExam extends StatefulWidget {
   const AccessExam({super.key});
@@ -18,6 +15,21 @@ class AccessExam extends StatefulWidget {
 class _AccessExamState extends State<AccessExam> {
 
   Constants constants = Constants();
+    localStorage localResult = localStorage();
+
+    bool isQuizTaken = false;
+
+  //function for checking if the student has already attempted the quiz
+  Future<bool> checkIfQuizTaken(BuildContext context, String quizTitle) async {
+    var resultData = await localResult.getResultDataLocally();
+    print('result data: ${resultData}');
+    print(resultData?['quizTitle']);
+    if(resultData != null && resultData['quizTitle'] == quizTitle){
+        return true;
+      }else{
+        return false;
+      }
+    }
 
   DB_Services databaseServices = new DB_Services();
 
@@ -36,16 +48,38 @@ class _AccessExamState extends State<AccessExam> {
                   print("This is doc : ${doc[index]["quizDuration"]}");
                   //     print("length of doc is: ${doc.length}");
                     return GestureDetector(
-                        onTap: (){
+                        onTap: () async{
+                          print('on tap working correctly');
+                          print('quiz TItle: ${doc[index]["quizTitle"]}');
+                          bool isQuizTaken = await checkIfQuizTaken(context, doc[index]['quizTitle']);
+                          print('quiz taken: ${isQuizTaken}');
+                          if(isQuizTaken){
+                            // User has already taken the quiz
+                            showDialog(
+                              context: context,
+                              builder: (context) => AlertDialog(
+                                title: Text("Quiz Already Taken"),
+                                content: Text("You've already attempted the quiz"),
+                                actions: [
+                                  TextButton(
+                                    onPressed: () {
+                                      Navigator.of(context).pop();
+                                    },
+                                    child: Text("OK"),
+                                  ),
+                                ],
+                              ),
+                            );
+                          }else{
                           Navigator.push(context, MaterialPageRoute(builder: (context) =>
                               StartExam(
                                   quizId: doc[index]['quizId'],
                                 quizTitle: doc[index]['quizTitle'],
                                 quizDuration: doc[index]['quizDuration'],
                                 noOfQuestions: doc[index]['noOfQuestion'],
-
                               ),), );
-                        },
+                        }
+                          },
                         child: QuizTile(examTitle: doc[index]['quizTitle']),
                         );
                   });
@@ -53,16 +87,6 @@ class _AccessExamState extends State<AccessExam> {
       ),
     );
   }
-
-// @override
-//   void initState() {
-//   databaseServices.getQuizData().then((value){
-//     setState(() {
-//       quizStream = value;
-//     });
-//   });
-//     super.initState();
-//   }
 
   @override
   Widget build(BuildContext context) {
@@ -187,3 +211,7 @@ class QuizTile extends StatelessWidget {
     );
   }
 }
+
+
+
+

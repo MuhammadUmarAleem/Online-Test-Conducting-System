@@ -18,7 +18,7 @@ class _NavBarState extends State<NavBar> {
   Widget build(BuildContext context){
       return Drawer(
         child: FutureBuilder(
-          future:localStorage().getUser(),
+          future: localStorage().getUser(),
           builder: (context, snap){
           if(snap.connectionState == ConnectionState.waiting){
             return const Center(
@@ -32,7 +32,7 @@ class _NavBarState extends State<NavBar> {
               padding: EdgeInsets.zero,
               children: [
                 UserAccountsDrawerHeader(
-                  accountName: Text(snap.data!.name.toString()),
+                  accountName: Text(snap.data!.rollNo.toString()),
                   accountEmail: Text(snap.data!.email.toString()),
 
                   decoration:const BoxDecoration(
@@ -59,7 +59,7 @@ class _NavBarState extends State<NavBar> {
                 ListTile(
                   leading: Image.asset("assets/icons/feedback.png",
                     color: const Color(0xff8523D9),),
-                  title: const Text('Share Feedback', style: SideBarTextStyle),
+                  title: const Text('Teacher Feedback', style: SideBarTextStyle),
                   onTap: () {},
                 ),
                 ListTile(

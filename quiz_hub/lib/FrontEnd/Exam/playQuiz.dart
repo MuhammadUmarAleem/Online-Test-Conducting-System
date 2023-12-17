@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:quiz_hub/FrontEnd/Exam/getIndividualResult.dart';
 import 'package:quiz_hub/FrontEnd/Student/getResult.dart';
 import 'package:quiz_hub/Services/quizDatabase.dart';
 import 'package:quiz_hub/models/constants.dart';
@@ -21,18 +22,21 @@ class StartExam extends StatefulWidget {
   int currentQuestionIndex = 0;
   int totalScore = 0;
 int scoreValue = 0;
+int? _showQuizTimer;
+late Timer _timer;
+String showTimer = "";
   Stream? infoStream;
+
+// Declare a StreamController to manage the stream
+late StreamController<List<QueryDocumentSnapshot<Object?>>> _controller;
 
 class _StartExamState extends State<StartExam> {
 
   Constants constants = Constants();
   bool _isLoading = true; // Set to true initially to show a loading indicator
+  bool _isSeleted = false; // Set to true initially to show a loading indicator
   List<Map<String, dynamic>> questions = [];
   DB_Services databaseServices = new DB_Services();
-  QuerySnapshot? questionSnapshot;
-
-  // Add more variables to store other quiz details if needed
-  late Timer _timer;
 
   void nextQuestion(index, length){
     if(index < length){
@@ -42,41 +46,56 @@ class _StartExamState extends State<StartExam> {
     }
   }
 
-  //set time duration for quiz
-  void startTimer() {
-    _timer = Timer.periodic(Duration(seconds: 1), (Timer timer) {
-      int _remainingTimeInSeconds = widget.quizDuration;
+  Timer _startTimer(int _quizTimer) {
+    // timer = (widget.quizDuration) * 60;
+    const oneSec = Duration(seconds: 1);
+    return Timer.periodic(oneSec, (Timer t) {
       setState(() {
-        if (_remainingTimeInSeconds > 0) {
-          _remainingTimeInSeconds--;
-        } else {
-          // Time is over, automatically submit the quiz
-          // submitQuiz();
+        if (_quizTimer < 1) {
+          t.cancel();
+          Navigator.pushReplacement(
+            context, MaterialPageRoute(builder: (context) => getIndResult(quizId: widget.quizId, quizTitle: widget.quizTitle, noOfQuestions: widget.noOfQuestions, trueAnswers: totalScore),),);
+        }else{
+          _quizTimer--;
+          showTimer = "${_quizTimer}";
         }
       });
     });
   }
 
-
-  void loadQuizQuestions() async{
-    // Fetch quiz questions from Firestore using quizId
-    QuerySnapshot<Map<String, dynamic>> snapShot = await databaseServices.getQuizQuestions(widget.quizId);
-    questions = snapShot.docs.map((doc) => doc.data()).toList();
-    setState(() {
-
-    });
-    // print();
-  }
-
-
-  @override
-  void dispose() {
-    infoStream = null;
-    super.dispose();
+    void showMessage(BuildContext context, String message) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(message),
+      ),
+    );
   }
 
   bool nextQuestionButtonDisabled = false;
   bool submitButtonDisabled = true;
+
+  @override
+  void initState() {
+    int _quizTimer = widget.quizDuration;
+    _quizTimer = _quizTimer * 60;
+    _controller = StreamController<List<QueryDocumentSnapshot<Object?>>>();
+    // Start listening to the stream when the widget is initialized
+    databaseServices.getQuizQuestion(widget.quizId).listen((data) {
+      _controller.add(data.docs);
+    });
+
+    // Start the timer when the widget is initialized
+    _timer = _startTimer(_quizTimer);
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _timer.cancel();
+    // Close the StreamController when the widget is disposed
+    _controller.close();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -85,34 +104,49 @@ class _StartExamState extends State<StartExam> {
       body: SafeArea(
         child: Column(
           children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
             Image(image: AssetImage("assets/images/pen_on_paper.png"), height: 150,),
+                SizedBox(width: 20,),
+
+                // Display remaining time
+                Text('Time: ${showTimer}',
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                ),
+              ],
+            ),
             SizedBox(height: 20,),
             Text("${widget.quizTitle} Exam", style: HeadingStyle2,),
             SizedBox(height: 25,),
             Padding(
               padding: const EdgeInsets.all(10),
-              child: StreamBuilder(
-                stream: databaseServices.getQuizQuestion(widget.quizId),
+              child: StreamBuilder<List<DocumentSnapshot>>(
+                stream: _controller.stream,
+                initialData: [], // Provide an initial empty snapshot
                 builder: (context, snapshot) {
                   if(snapshot.connectionState == ConnectionState.waiting){
                     return Center(child: CircularProgressIndicator(),);
                   }else if(snapshot.hasError){
                     return Center(child: Text(snapshot.error.toString(),),);
                   }else{
-
-                    final String currentQuestion = snapshot.data!.docs[currentQuestionIndex]["Question"];
-                    final String trueAnswer = snapshot.data!.docs[currentQuestionIndex]['trueAnswer'];
-                    final options = snapshot.data!.docs;
+                    final List<DocumentSnapshot<Object?>> documentList  = snapshot.data!;
+                    if(documentList.isEmpty){
+                      return Center(child: Text("No questions available."),);
+                    }
+                    final String currentQuestion = documentList[currentQuestionIndex]["Question"];
+                    final String trueAnswer = documentList[currentQuestionIndex]['trueAnswer'];
+                    final options = documentList;
 
                     return Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       quizQuestion(question: currentQuestion,currentQuestionIndex: currentQuestionIndex, ),
-                      trueOption(prefix: "a", text: options[currentQuestionIndex]['Option1'], index: currentQuestionIndex,onTap: (){if(trueAnswer == options[currentQuestionIndex]['Option1']){scoreValue = 1;}else{scoreValue = 0;} }),
-                      trueOption(prefix: "b", text: options[currentQuestionIndex]['Option2'], index: currentQuestionIndex,onTap: (){if(trueAnswer == options[currentQuestionIndex]['Option2']){scoreValue = 1;}else{scoreValue = 0;} }),
-                      trueOption(prefix: "c", text: options[currentQuestionIndex]['Option3'], index: currentQuestionIndex,onTap: (){if(trueAnswer == options[currentQuestionIndex]['Option3']){scoreValue = 1;}else{scoreValue = 0;} }),
-                      trueOption(prefix: "d", text: options[currentQuestionIndex]['Option4'], index: currentQuestionIndex,onTap: (){if(trueAnswer == options[currentQuestionIndex]['Option4']){scoreValue = 1;}else{scoreValue = 0;} }),
+                      trueOption(prefix: "a", text: options[currentQuestionIndex]['Option1'], index: currentQuestionIndex,onTap: (){ _isSeleted = true;  if(trueAnswer == options[currentQuestionIndex]['Option1']){scoreValue = 1;}else{scoreValue = 0;} }),
+                      trueOption(prefix: "b", text: options[currentQuestionIndex]['Option2'], index: currentQuestionIndex,onTap: (){ _isSeleted = true; if(trueAnswer == options[currentQuestionIndex]['Option2']){scoreValue = 1;}else{scoreValue = 0;} }),
+                      trueOption(prefix: "c", text: options[currentQuestionIndex]['Option3'], index: currentQuestionIndex,onTap: (){ _isSeleted = true; if(trueAnswer == options[currentQuestionIndex]['Option3']){scoreValue = 1;}else{scoreValue = 0;} }),
+                      trueOption(prefix: "d", text: options[currentQuestionIndex]['Option4'], index: currentQuestionIndex,onTap: (){ _isSeleted = true; if(trueAnswer == options[currentQuestionIndex]['Option4']){scoreValue = 1;}else{scoreValue = 0;} }),
 
                       SizedBox(height: 100,),
 
@@ -123,16 +157,22 @@ class _StartExamState extends State<StartExam> {
 
                           //submit exam button
                           // if(nextQuestionButtonDisabled)
-                         currentQuestionIndex < snapshot.data!.docs.length - 1 ?
+                         currentQuestionIndex < documentList.length - 1 ?
                           //Next Question button
                           GestureDetector(
                             onTap: (){
+                              if(_isSeleted == false){
+                                showMessage(context,
+                                    'Please select at least one option');
+                              }else{
                               totalScore = totalScore + scoreValue;
+                              _isSeleted = false;
                               print("gesture index: $currentQuestionIndex");
-                              print("total questions ${snapshot.data!.docs.length}");
+                              print("total questions ${documentList.length}");
                               print("Current Score is ${totalScore}");
-                              nextQuestion(currentQuestionIndex, snapshot.data!.docs.length);
-                            },
+                              nextQuestion(currentQuestionIndex, documentList.length);
+                            }
+                              },
                             child:  Container(
                                 alignment: Alignment.center,
                                 padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
@@ -147,8 +187,16 @@ class _StartExamState extends State<StartExam> {
                              :
                          GestureDetector(
                            onTap: (){
+                             if(_isSeleted == false){
+                             showMessage(context,
+                             'Please select at least one option');
+                             }else{
+                             _isSeleted = false;
                              print('total Score is ${totalScore}');
-                             Navigator.push(context, MaterialPageRoute(builder: (context) => GetResult(),),);
+                             int sentTotalScore = totalScore;
+                             totalScore = 0;
+                             Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => getIndResult(quizId: widget.quizId, quizTitle: widget.quizTitle, noOfQuestions: widget.noOfQuestions, trueAnswers: sentTotalScore),),);
+                             }
                            },
                            child:  Container(
                                alignment: Alignment.center,

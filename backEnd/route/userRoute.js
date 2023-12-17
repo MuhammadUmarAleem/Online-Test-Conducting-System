@@ -36,6 +36,22 @@ router.get("/teacher", async (req, res) => {
   res.send({ teacher });
 });
 
+//teacher account creation
+router.get("/student", async (req, res) => {
+  const hashPassword = await bCrypt.hash("student123", 8);
+
+  let student = await schema.create({
+    firstName: "Zohaan",
+    lastName: "Mubashir",
+    email: "zohaan123@gmail.com",
+    rollNo: "2021-CS-55",
+    password: hashPassword,
+    role: "Student",
+  });
+  res.send({ student });
+});
+
+
 router.post("/user", userController.createUser);
 router.get("/user", userController.getAllUsers);
 router.put("/user/:id", userController.updateUser);

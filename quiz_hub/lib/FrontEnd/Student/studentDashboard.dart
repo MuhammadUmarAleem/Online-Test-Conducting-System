@@ -260,7 +260,8 @@ class _studentDashboardState extends State<studentDashboard> {
                 //link to go to next screen
                 GestureDetector(
                   onTap: (){
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => const WelcomePage(),
+
+                    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const WelcomePage(),
                     ),
                     );
                   },

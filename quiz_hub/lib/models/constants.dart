@@ -25,6 +25,24 @@ TextStyle(
   fontSize: 20, fontWeight: FontWeight.w600, color: Color(0xff8523D9),
 );
 
+//paragraph text style
+const TableHeadingTextStyle =
+TextStyle(
+  fontSize: 18, fontWeight: FontWeight.w600, color: Color(0xff8523D9),
+);
+
+//paragraph text style
+const TableHeadingTextStyle2 =
+TextStyle(
+  fontSize: 16, fontWeight: FontWeight.w600, color: Color(0xff8523D9),
+);
+
+//paragraph text style
+const TableCellsTextStyle =
+TextStyle(
+  fontSize: 16, fontWeight: FontWeight.w500, color: Color(0xff000000),
+);
+
 //score text style
 const scoreTextStyle =
 TextStyle(
@@ -50,6 +68,11 @@ TextStyle(
   fontSize: 25, fontWeight: FontWeight.w600, color: Colors.white,
 );
 
+//paragraph text style purple
+const NormalTextStylePurple =
+TextStyle(
+  fontSize: 25, fontWeight: FontWeight.w600, color: Color(0xff8523D9),
+);
 
 //paragraph text style
 const TextStyle18 =

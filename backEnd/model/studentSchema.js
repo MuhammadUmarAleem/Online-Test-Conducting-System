@@ -15,9 +15,8 @@ const userSchema = new mongoose.Schema({
     },
     rollNo : {
         type: String,
-        // required : true,
+        required : true,
         isUnique: true,
-        default: null,
     },
     password : {
         type: String,
@@ -33,7 +32,7 @@ const userSchema = new mongoose.Schema({
         required : true,
         default: false,
     },
-},    {    timestamps: true,});
+},    {    timestamps: true,} );
 
-module.exports = mongoose.model('userLogin', userSchema)
+module.exports = mongoose.model('studentLogin', userSchema)
 // Compare this snippet from routes/userRoutes.js:

@@ -3,7 +3,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 class DB_Services{
 
   final FirebaseFirestore _firebaseFirestore = FirebaseFirestore.instance;
- Future<void> addQuizData(Map<String, dynamic> quizData, String quizId) async{
+
+  Future<void> addQuizData(Map<String, dynamic> quizData, String quizId) async{
 try{
 
    await _firebaseFirestore.collection("Quiz")
@@ -39,4 +40,26 @@ try{
   Stream<QuerySnapshot<Map<String, dynamic>>> getQuizQuestion(String quizId) {
     return _firebaseFirestore.collection("Quiz").doc(quizId).collection("QnA").snapshots();
   }
+
+  //adding student result data
+  Future<void> addStudentResultData(Map<String, dynamic> studentResultData, studentID) async{
+    try{
+
+      String quizId = studentResultData["quizId"].toString();
+      String quizTitle = studentResultData["quizTitle"].toString();
+        await _firebaseFirestore.collection("Quiz Result").doc("${quizTitle} result")
+      .collection("Student Results").doc(studentID).set(studentResultData);
+      print('Result Data added successfully');
+        print(studentResultData);
+    }catch(e){
+      print(e.toString());
+    }
+  }
+
+  //obtaining student result data
+
+  Stream<QuerySnapshot<Map<String, dynamic>>> getSubjectWiseResultData(String subjectResult) {
+  return  _firebaseFirestore.collection('Quiz Result').doc('${subjectResult} result')
+      .collection("Student Results").snapshots();
+}
 }

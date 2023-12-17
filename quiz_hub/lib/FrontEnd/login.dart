@@ -1,11 +1,13 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:quiz_hub/FrontEnd/Admin/adminDashboard.dart';
 import 'package:quiz_hub/FrontEnd/Student/studentDashboard.dart';
 import 'package:quiz_hub/FrontEnd/Teacher/TeacherDashboard.dart';
 import 'package:quiz_hub/FrontEnd/signup.dart';
 import 'package:quiz_hub/Services/APICalls.dart';
 import 'package:quiz_hub/models/loginResponse.dart';
 import 'package:quiz_hub/models/loginRole.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../models/constants.dart';
 
@@ -26,6 +28,9 @@ class _LoginScreenState extends State<LoginScreen> {
   TextEditingController confirmPasswordController = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
+  //list for saving previously logged in emails
+  List<String> enteredEmails = [];
+
   void _login() async {
     if (_formKey.currentState!.validate()) {
 try{
@@ -33,9 +38,11 @@ try{
 
       roleLogin userRole = await loginAPI.getUserRole(response.token!);
       if(userRole.data!.role == "Admin"){
-      Navigator.push(context, MaterialPageRoute(builder: (context) => const studentDashboard()));
+      Navigator.push(context, MaterialPageRoute(builder: (context) => const AdminDashboard()));
       }else if(userRole.data!.role == "Teacher"){
         Navigator.push(context, MaterialPageRoute(builder: (context) => const TeacherDashboard()));
+      }else if(userRole.data!.role == "Student"){
+        Navigator.push(context, MaterialPageRoute(builder: (context) => const studentDashboard()));
       }
 
       // Navigator.push(context, MaterialPageRoute(builder: (context) => const studentDashboard()));
@@ -44,7 +51,6 @@ try{
     }
 }
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -125,6 +131,7 @@ try{
                           hintText: "Email",
                         ),
                       ),
+
                     ),
                     const SizedBox(height: 10),
 

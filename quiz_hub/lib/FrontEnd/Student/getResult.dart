@@ -1,13 +1,40 @@
 import 'package:flutter/material.dart';
+import 'package:quiz_hub/FrontEnd/Student/showSubjectResult.dart';
 import 'package:quiz_hub/FrontEnd/WelcomePage.dart';
+import 'package:quiz_hub/localStorage/local_storage.dart';
 import 'package:quiz_hub/models/constants.dart';
 import 'package:quiz_hub/models/NavBar.dart';
 
-class GetResult extends StatelessWidget {
+class GetResult extends StatefulWidget {
   GetResult({super.key });
 
+  @override
+  State<GetResult> createState() => _GetResultState();
+}
 
+class _GetResultState extends State<GetResult> {
   Constants constants = Constants();
+
+//variables and object for obtaining user logged in credentials
+  late String _userRollNo, _userEmail, _userName;
+
+  localStorage localstorage = localStorage();
+
+  //obtaining user logged in credentials
+  Future<void> getUserName() async {
+    var login_response = await localStorage().getUser();
+
+    _userRollNo = login_response.rollNo.toString();
+    _userEmail = login_response.email.toString();
+    _userName = login_response.name.toString();
+    print('initialization ${_userEmail}');
+  }
+
+  @override
+  void initState() {
+  getUserName();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -92,7 +119,8 @@ class GetResult extends StatelessWidget {
 
                 GestureDetector(
                   onTap: (){
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => const WelcomePage(),
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => SubjectWiseResult(
+                        subjectName: 'AI', userEmail: _userEmail, userRollNo: _userRollNo, userName: _userName),
                     ),
                     );
                   },

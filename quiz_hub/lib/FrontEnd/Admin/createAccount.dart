@@ -1,6 +1,8 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:quiz_hub/FrontEnd/Admin/adminDashboard.dart';
-
+import 'package:http/http.dart' as http;
+import '../../Services/APICalls.dart';
 import '../../models/constants.dart';
 
 class CreateUserAccount extends StatefulWidget {
@@ -11,34 +13,74 @@ class CreateUserAccount extends StatefulWidget {
 }
 
 class _CreateUserAccountState extends State<CreateUserAccount> {
-
   Constants constants = Constants();
+  APICalls loginAPI = APICalls();
 
+  bool isValidate = false;
+  String backEnd_URL = 'https://organized-beaded-vacation.glitch.me';
   List<String> roleOptions = ["Admin", "Student", "Teacher"];
   String? selectedRole;
 
   TextEditingController firstNameController = TextEditingController();
   TextEditingController lastNameController = TextEditingController();
-  TextEditingController roleController = TextEditingController();
 
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
-  TextEditingController confirmPasswordController = TextEditingController();
+  TextEditingController userRegistration = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
-  void _CreateAccount() {
-    // if (_formKey.currentState!.validate()) {
-    //   var userInfo = {
-    //     "firstName": firstNameController.text,
-    //     "lastName": lastNameController.text,
-    //     "email": emailController.text,
-    //     "password": passwordController.text,
-    //     "role": roleController.text,
-    //   };
-    //   var response =
-    // }else{
-    //
-    // }
+  void _CreateAccount() async {
+    try {
+      if (_formKey.currentState!.validate()) {
+        var userReqBody = {
+          "firstName": firstNameController.text,
+          "lastName": lastNameController.text,
+          "email": emailController.text,
+          "rollNo": userRegistration.text,
+          "password": passwordController.text,
+          "role": selectedRole,
+        };
+
+        var registerUser = await loginAPI.CreateAccount(userReqBody);
+
+        print('user Registered: ${registerUser.statusCode}');
+
+        //if user register successfully
+        if (registerUser.statusCode == 201) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              duration: Duration(seconds: 2),
+              content: Text('User Registered Successfully'),
+            ),
+          );
+
+          Navigator.push(context,
+              MaterialPageRoute(builder: (context) => AdminDashboard()));
+        } else {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              duration: Duration(seconds: 2),
+              content: Text('Failed to register user'),
+            ),
+          );
+        }
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            duration: Duration(seconds: 2),
+            content: Text('Please enter valid credentials'),
+          ),
+        );
+      }
+    } catch (error) {
+      print('Error: $error');
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          duration: Duration(seconds: 2),
+          content: Text('Error occurred. ${error}'),
+        ),
+      );
+    }
   }
 
   @override
@@ -55,9 +97,12 @@ class _CreateUserAccountState extends State<CreateUserAccount> {
           padding: const EdgeInsets.all(15.0),
           child: Column(
             children: [
-
-              const Text('QuizHub',
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 45, color: Color(0xff8523D9)),
+              const Text(
+                'QuizHub',
+                style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 45,
+                    color: Color(0xff8523D9)),
               ),
               const SizedBox(height: 20),
 
@@ -66,11 +111,11 @@ class _CreateUserAccountState extends State<CreateUserAccount> {
                   children: [
                     TextSpan(
                       text: "Stay Connected \n",
-                      style:NormalTextStyle,
+                      style: NormalTextStyle,
                     ),
                     TextSpan(
                       text:
-                      "Create an account and get access to valuable content and quizess ",
+                          "Create an account and get access to valuable content and quizess ",
                       style: ThinTextStyle,
                     ),
                   ],
@@ -82,8 +127,10 @@ class _CreateUserAccountState extends State<CreateUserAccount> {
 
               //logo placement
               const Center(
-                child: Image(image: AssetImage('assets/images/signup_illustration.png'),
-                  height: 150 ,),
+                child: Image(
+                  image: AssetImage('assets/images/signup_illustration.png'),
+                  height: 150,
+                ),
               ),
 
               const SizedBox(height: 20),
@@ -94,7 +141,6 @@ class _CreateUserAccountState extends State<CreateUserAccount> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-
                     //first Name input
                     Container(
                       padding: const EdgeInsets.symmetric(horizontal: 10),
@@ -102,11 +148,14 @@ class _CreateUserAccountState extends State<CreateUserAccount> {
                         color: Colors.white,
                         borderRadius: BorderRadius.circular(5),
                       ),
-
                       child: TextFormField(
                         keyboardType: TextInputType.emailAddress,
                         textInputAction: TextInputAction.next,
-                        // onChanged: (_) => _formKey.currentState?.validate(),
+                        validator: (value) {
+                          if (value!.isEmpty) {
+                            return 'Please Enter First Name ';
+                          }
+                        },
                         controller: firstNameController,
                         decoration: const InputDecoration(
                           hintText: "First Name",
@@ -124,11 +173,16 @@ class _CreateUserAccountState extends State<CreateUserAccount> {
                         color: Colors.white,
                         borderRadius: BorderRadius.circular(5),
                       ),
-
                       child: TextFormField(
                         keyboardType: TextInputType.emailAddress,
                         textInputAction: TextInputAction.next,
                         // onChanged: (_) => _formKey.currentState?.validate(),
+
+                        validator: (value) {
+                          if (value!.isEmpty) {
+                            return 'Please Enter Last Name ';
+                          }
+                        },
                         controller: lastNameController,
                         decoration: const InputDecoration(
                           hintText: "Last Name",
@@ -146,7 +200,6 @@ class _CreateUserAccountState extends State<CreateUserAccount> {
                         color: Colors.white,
                         borderRadius: BorderRadius.circular(5),
                       ),
-
                       child: TextFormField(
                         keyboardType: TextInputType.emailAddress,
                         textInputAction: TextInputAction.next,
@@ -155,8 +208,8 @@ class _CreateUserAccountState extends State<CreateUserAccount> {
                           return value!.isEmpty
                               ? 'Please, Enter Email Address'
                               : AppConstants.emailRegex.hasMatch(value)
-                              ? null
-                              : 'Invalid Email Address';
+                                  ? null
+                                  : 'Invalid Email Address';
                         },
                         controller: emailController,
                         decoration: const InputDecoration(
@@ -183,22 +236,21 @@ class _CreateUserAccountState extends State<CreateUserAccount> {
                           return value!.isEmpty
                               ? 'Please, Enter Password'
                               : AppConstants.passwordRegex.hasMatch(value)
-                              ? null
-                              : 'Invalid Password';
+                                  ? null
+                                  : 'Invalid Password';
                         },
                         controller: passwordController,
                         obscureText: true,
                         decoration: const InputDecoration(
                           hintText: "Password",
                         ),
-
                       ),
                       height: 40,
                     ),
 
                     const SizedBox(height: 10),
 
-                    //confirm password field
+                    //User Registration field
                     Container(
                       padding: const EdgeInsets.symmetric(horizontal: 10),
                       decoration: BoxDecoration(
@@ -208,23 +260,9 @@ class _CreateUserAccountState extends State<CreateUserAccount> {
                       child: TextFormField(
                         keyboardType: TextInputType.visiblePassword,
                         textInputAction: TextInputAction.done,
-
-                        // onChanged: (value) => _formKey.currentState?.validate(),
-
-                        validator: (value) {
-                          return value!.isEmpty
-                              ? 'Please, Re-Enter Password'
-                              : AppConstants.passwordRegex.hasMatch(value)
-                              ? passwordController.text ==
-                              confirmPasswordController.text
-                              ? null
-                              : 'Password not matched!'
-                              : 'Invalid Password!';
-                        },
-                        controller: confirmPasswordController,
-                        obscureText: true,
+                        controller: userRegistration,
                         decoration: const InputDecoration(
-                          hintText: "Confirm Password",
+                          hintText: "Student Registration",
                         ),
                       ),
                       height: 40,
@@ -251,7 +289,8 @@ class _CreateUserAccountState extends State<CreateUserAccount> {
                             child: Text(title),
                           );
                         }).toList(),
-                        validator: (value) => value!.isEmpty ? "Select User Role" : null,
+                        validator: (value) =>
+                            value!.isEmpty ? "Select User Role" : null,
                         decoration: const InputDecoration(
                           hintText: "Role Assignment",
                         ),
@@ -268,16 +307,19 @@ class _CreateUserAccountState extends State<CreateUserAccount> {
                         textStyle: const TextStyle(
                           height: 0.7,
                           fontSize: 22,
-                        ), backgroundColor: constants.darkPurple,
+                        ),
+                        backgroundColor: constants.darkPurple,
                         padding: const EdgeInsets.symmetric(vertical: 15),
                       ),
-                      child: const Center(child: Text('Sign Up', style: TextStyle18,)
-                      ),
+                      child: const Center(
+                          child: Text(
+                        'Create Account',
+                        style: TextStyle18,
+                      )),
                     ),
                   ],
                 ),
               ),
-
             ],
           ),
         ),
