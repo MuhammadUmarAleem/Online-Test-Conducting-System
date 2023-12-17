@@ -66,6 +66,28 @@ class _AddQuestionState extends State<AddQuestion> {
   bool addQuestionButtonDisabled = false;
   bool submitButtonDisabled = true;
 
+  // Function to show the success popup
+  void _showSuccessPopup(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Create Exam'),
+          content: Text('Exam Created Successfully'),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+                // You can navigate to another screen or perform any other action here
+              },
+              child: Text('OK'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -268,6 +290,7 @@ class _AddQuestionState extends State<AddQuestion> {
                         GestureDetector(
                           onTap: (){
                             submitButtonDisabled ? null :
+                            _showSuccessPopup(context);
                             Navigator.push(context, MaterialPageRoute(builder: (context) => TeacherDashboard(),),);
                           },
                           child:  Container(

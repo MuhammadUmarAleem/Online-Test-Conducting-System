@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:quiz_hub/FrontEnd/Teacher/createExam.dart';
+import 'package:quiz_hub/FrontEnd/Teacher/reviewResults.dart';
+import 'package:quiz_hub/FrontEnd/Teacher/teacherFeedback.dart';
+import 'package:quiz_hub/FrontEnd/WelcomePage.dart';
 import 'package:quiz_hub/models/constants.dart';
 import '../localStorage/local_storage.dart';
 
@@ -13,6 +16,41 @@ class TeacherNavBar extends StatefulWidget {
 class _TeacherNavBarState extends State<TeacherNavBar> {
 
   localStorage localUser = localStorage();
+  late String _teacherName;
+
+  // Function to show logout confirmation dialog
+  Future<void> _showLogoutConfirmationDialog() async {
+    return showDialog<void>(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Logout Confirmation'),
+          content: const Text('Are you sure you want to logout?'),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                // Close the dialog
+                Navigator.of(context).pop();
+              },
+              child: const Text('No'),
+            ),
+            TextButton(
+              onPressed: () {
+                // Perform logout logic here
+                Navigator.of(context).pop(); // Close the dialog
+                // Add your logout code here
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const WelcomePage()),
+                );
+              },
+              child: const Text('Yes'),
+            ),
+          ],
+        );
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -20,6 +58,7 @@ class _TeacherNavBarState extends State<TeacherNavBar> {
         child: FutureBuilder(
             future: localStorage().getUser(),
             builder: (context, snap){
+              _teacherName = snap.data!.name.toString();
               if(snap.connectionState == ConnectionState.waiting){
                 return const Center(
                   child: CircularProgressIndicator(
@@ -51,7 +90,11 @@ class _TeacherNavBarState extends State<TeacherNavBar> {
                         leading: Image.asset("assets/icons/take_exam.png",
                           color: const Color(0xff8523D9),),
                         title: const Text('Create Exam', style: SideBarTextStyle,),
-                        onTap: () {},
+                        onTap: () {
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => CreateExam(),
+                          ),
+                          );
+                        },
                       ),
                     ),
                     ListTile(
@@ -65,13 +108,21 @@ class _TeacherNavBarState extends State<TeacherNavBar> {
                       leading: Image.asset("assets/icons/feedback.png",
                         color: const Color(0xff8523D9),),
                         title: const Text('Review Result', style: SideBarTextStyle),
-                      onTap: () {},
+                      onTap: () {
+                        Navigator.push(context, MaterialPageRoute(builder: (context) => ReviewResultsByTeacher(),
+                        ),
+                        );
+                      },
                     ),
                     ListTile(
                       leading: Image.asset("assets/icons/feedback.png",
                         color: const Color(0xff8523D9),),
                       title: const Text('Provide Feedback', style: SideBarTextStyle),
-                      onTap: () {},
+                      onTap: () {
+                        Navigator.push(context, MaterialPageRoute(builder: (context) => TeacherFeedback(teacherName: _teacherName),
+                        ),
+                        );
+                      },
                     ),
 
                     ListTile(
@@ -85,6 +136,9 @@ class _TeacherNavBarState extends State<TeacherNavBar> {
                       leading: Image.asset(
                         "assets/icons/logout.png", color: const Color(0xff8523D9),),
                       title: const Text('Logout', style: SideBarTextStyle,),
+                      onTap: (){
+                        _showLogoutConfirmationDialog();
+                      },
                     ),
                   ],
                 );

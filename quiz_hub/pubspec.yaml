@@ -36,6 +36,8 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   snapshot: any
   cupertino_icons: ^1.0.2
+  sqflite: ^2.3.0
+  path_provider: any
   http: any
   shared_preferences: any
   firebase_core: any

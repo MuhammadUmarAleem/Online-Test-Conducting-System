@@ -72,6 +72,7 @@ class _ShowAllUsersState extends State<ShowAllUsers> {
       ),
 
       body: SingleChildScrollView(
+        scrollDirection: Axis.horizontal,
         child: Column(
           children: [
             Container(

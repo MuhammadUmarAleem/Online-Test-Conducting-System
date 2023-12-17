@@ -11,6 +11,7 @@ import 'package:quiz_hub/FrontEnd/Student/studentDashboard.dart';
 import 'package:quiz_hub/FrontEnd/Teacher/TeacherDashboard.dart';
 import 'package:quiz_hub/FrontEnd/Teacher/addQuestion.dart';
 import 'package:quiz_hub/FrontEnd/Teacher/createExam.dart';
+import 'package:quiz_hub/FrontEnd/Teacher/teacherFeedback.dart';
 import 'package:quiz_hub/FrontEnd/WelcomePage.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:quiz_hub/FrontEnd/login.dart';

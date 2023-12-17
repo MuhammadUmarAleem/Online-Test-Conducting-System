@@ -89,6 +89,38 @@ class _StartExamState extends State<StartExam> {
     super.initState();
   }
 
+  // Function to show logout confirmation dialog
+  Future<void> _showSubmitConfirmationDialog(int sentTotalScore) async {
+    return showDialog<void>(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Submit Confirmation'),
+          content: const Text('Are you sure you want to submit the exam?'),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                // Close the dialog
+                Navigator.of(context).pop();
+              },
+              child: const Text('No'),
+            ),
+            TextButton(
+              onPressed: () {
+                // Perform logout logic here
+                Navigator.of(context).pop(); // Close the dialog
+                // Add your logout code here
+                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => getIndResult(quizId: widget.quizId, quizTitle: widget.quizTitle, noOfQuestions: widget.noOfQuestions, trueAnswers: sentTotalScore),),);
+              },
+              child: const Text('Yes'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+
   @override
   void dispose() {
     _timer.cancel();
@@ -195,7 +227,7 @@ class _StartExamState extends State<StartExam> {
                              print('total Score is ${totalScore}');
                              int sentTotalScore = totalScore;
                              totalScore = 0;
-                             Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => getIndResult(quizId: widget.quizId, quizTitle: widget.quizTitle, noOfQuestions: widget.noOfQuestions, trueAnswers: sentTotalScore),),);
+                             _showSubmitConfirmationDialog(sentTotalScore);
                              }
                            },
                            child:  Container(

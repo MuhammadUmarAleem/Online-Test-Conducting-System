@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:quiz_hub/FrontEnd/Student/accessExam.dart';
 import 'package:quiz_hub/FrontEnd/Student/getResult.dart';
+import 'package:quiz_hub/FrontEnd/Student/getTeacherFeedback.dart';
 import 'package:quiz_hub/FrontEnd/Student/shareFeedback.dart';
 import 'package:quiz_hub/FrontEnd/WelcomePage.dart';
 import 'package:quiz_hub/models/NavBar.dart';
@@ -16,6 +17,40 @@ class studentDashboard extends StatefulWidget {
 class _studentDashboardState extends State<studentDashboard> {
 
   Constants constants = Constants();
+
+  // Function to show logout confirmation dialog
+  Future<void> _showLogoutConfirmationDialog() async {
+    return showDialog<void>(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Logout Confirmation'),
+          content: const Text('Are you sure you want to logout?'),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                // Close the dialog
+                Navigator.of(context).pop();
+              },
+              child: const Text('No'),
+            ),
+            TextButton(
+              onPressed: () {
+                // Perform logout logic here
+                Navigator.of(context).pop(); // Close the dialog
+                // Add your logout code here
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const WelcomePage()),
+                );
+              },
+              child: const Text('Yes'),
+            ),
+          ],
+        );
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -213,13 +248,10 @@ class _studentDashboardState extends State<studentDashboard> {
                 //link to go to next screen
                 GestureDetector(
                   onTap: (){
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => const ShareFeedback(),
-                    ),
-                    );
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => GetTeacherFeedback()));
                   },
                   child:  const Icon(Icons.arrow_forward, color: Colors.white, size: 50),
                 ),
-
               ],
             ),
           ),
@@ -260,10 +292,7 @@ class _studentDashboardState extends State<studentDashboard> {
                 //link to go to next screen
                 GestureDetector(
                   onTap: (){
-
-                    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const WelcomePage(),
-                    ),
-                    );
+                    _showLogoutConfirmationDialog();
                   },
                   child:  const Icon(Icons.arrow_forward, color: Colors.white, size: 50),
                 ),

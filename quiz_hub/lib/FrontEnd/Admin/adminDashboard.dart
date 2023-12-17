@@ -15,6 +15,40 @@ class _AdminDashboardState extends State<AdminDashboard> {
 
   Constants constants = Constants();
 
+  // Function to show logout confirmation dialog
+  Future<void> _showLogoutConfirmationDialog() async {
+    return showDialog<void>(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Logout Confirmation'),
+          content: const Text('Are you sure you want to logout?'),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                // Close the dialog
+                Navigator.of(context).pop();
+              },
+              child: const Text('No'),
+            ),
+            TextButton(
+              onPressed: () {
+                // Perform logout logic here
+                Navigator.of(context).pop(); // Close the dialog
+                // Add your logout code here
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const WelcomePage()),
+                );
+              },
+              child: const Text('Yes'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -307,10 +341,7 @@ class _AdminDashboardState extends State<AdminDashboard> {
                   //link to go to next screen
                   GestureDetector(
                     onTap: (){
-
-                      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const WelcomePage(),
-                      ),
-                      );
+                      _showLogoutConfirmationDialog();
                     },
                     child:  const Icon(Icons.arrow_forward, color: Colors.white, size: 50),
                   ),

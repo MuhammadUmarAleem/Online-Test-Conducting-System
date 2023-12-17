@@ -167,7 +167,8 @@ class _GetResultState extends State<GetResult> {
                 //link to go to next screen
                 GestureDetector(
                   onTap: (){
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => const WelcomePage(),
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => SubjectWiseResult(
+                        subjectName: 'SE', userEmail: _userEmail, userRollNo: _userRollNo, userName: _userName),
                     ),
                     );
                   },
@@ -214,7 +215,8 @@ class _GetResultState extends State<GetResult> {
                 //link to go to next screen
                 GestureDetector(
                   onTap: (){
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => const WelcomePage(),
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => SubjectWiseResult(
+                        subjectName: 'PPSD', userEmail: _userEmail, userRollNo: _userRollNo, userName: _userName),
                     ),
                     );
                   },
@@ -261,7 +263,8 @@ class _GetResultState extends State<GetResult> {
                 //link to go to next screen
                 GestureDetector(
                   onTap: (){
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => const WelcomePage(),
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => SubjectWiseResult(
+                        subjectName: 'CN', userEmail: _userEmail, userRollNo: _userRollNo, userName: _userName),
                     ),
                     );
                   },
@@ -309,7 +312,8 @@ class _GetResultState extends State<GetResult> {
                 //link to go to next screen
                 GestureDetector(
                   onTap: (){
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => const WelcomePage(),
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => SubjectWiseResult(
+                        subjectName: 'MAD', userEmail: _userEmail, userRollNo: _userRollNo, userName: _userName),
                     ),
                     );
                   },

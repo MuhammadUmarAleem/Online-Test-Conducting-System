@@ -42,9 +42,6 @@ class _SubjectWiseResultState extends State<SubjectWiseResult> {
               StreamBuilder(
                 stream: FirebaseFirestore.instance.collection('Quiz Result').doc('${widget.subjectName} result')
                   .collection("Student Results").doc(widget.userRollNo).snapshots(),
-                  //     .where("StudentEmail", isEqualTo: widget.userEmail)
-                  // .where("studentRollNo", isEqualTo: widget.userRollNo)
-                  // .snapshots(),
                   builder: (context, resultSnap){
                     if (resultSnap.connectionState == ConnectionState.waiting) {
                       return CircularProgressIndicator();

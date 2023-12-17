@@ -180,26 +180,6 @@ try{
                 ),
               ),
 
-              const SizedBox(height: 20),
-
-              //button for going to login page
-              RichText(
-                text: TextSpan(
-                  text: 'Already have an account? ',
-                  style: ThinTextStyle,
-                  children: [
-                    TextSpan(
-                        text: 'SignUp',
-                        style: const TextStyle(
-                          fontWeight: FontWeight.bold,
-                        ),
-                        recognizer: TapGestureRecognizer()..onTap = (){
-                          Navigator.push(context, MaterialPageRoute(builder: (context) => const SignUpScreen()));
-                        }
-                    ),
-                  ],
-                ),
-              ),
             ],
           ),
         ),

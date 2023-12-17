@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:quiz_hub/FrontEnd/Exam/playQuiz.dart';
 import 'package:quiz_hub/Services/quizDatabase.dart';
@@ -21,10 +22,29 @@ class _AccessExamState extends State<AccessExam> {
 
   //function for checking if the student has already attempted the quiz
   Future<bool> checkIfQuizTaken(BuildContext context, String quizTitle) async {
-    var resultData = await localResult.getResultDataLocally();
-    print('result data: ${resultData}');
-    print(resultData?['quizTitle']);
-    if(resultData != null && resultData['quizTitle'] == quizTitle){
+
+    //obtaining student roll number from local storage
+    var login_response = await localStorage().getUser();
+    String _userRollNo = login_response.rollNo.toString();
+
+    String? subjectName;
+
+    //obtaining quiz details to see whether the student has given the quiz
+    // Obtain quiz details to see whether the student has given the quiz
+    final resultSnap = await FirebaseFirestore.instance
+        .collection('Quiz Result')
+        .doc('${quizTitle} result')
+        .collection("Student Results")
+        .doc(_userRollNo)
+        .get();
+
+    final data = resultSnap.data();
+
+    // Checking if the quiz is already taken
+     data != null && data["quizTitle"] == quizTitle;
+
+    //checking if the quiz is alreeady taken
+    if(subjectName == quizTitle){
         return true;
       }else{
         return false;

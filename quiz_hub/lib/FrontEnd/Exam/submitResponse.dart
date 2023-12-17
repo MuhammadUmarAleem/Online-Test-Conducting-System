@@ -65,9 +65,15 @@ class _SubmitExamResponseState extends State<SubmitExamResponse> {
       await dbServices
           .addStudentResultData(studentResultMap, userRollNo)
           .then((value) {
+        //showing popup
+        _showSuccessPopup(context);
         setState(() {
           localstorage.setResultDataLocally(studentResultMap);
           _isLoading = false;
+
+
+
+          //navigating back to dashboard
           Navigator.push(
             context,
             MaterialPageRoute(builder: (context) => studentDashboard()),
@@ -81,6 +87,31 @@ class _SubmitExamResponseState extends State<SubmitExamResponse> {
   void initState() {
     getUserName();
     super.initState();
+  }
+
+  // Function to show the success popup
+  void _showSuccessPopup(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Response Submitted'),
+          content: Text('Your response has been submitted successfully!'),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => studentDashboard()),
+                );
+              },
+              child: Text('OK'),
+            ),
+          ],
+        );
+      },
+    );
   }
 
   @override

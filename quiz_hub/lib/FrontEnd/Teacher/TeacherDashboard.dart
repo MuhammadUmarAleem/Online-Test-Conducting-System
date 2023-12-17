@@ -4,7 +4,9 @@ import 'package:quiz_hub/FrontEnd/Student/getResult.dart';
 import 'package:quiz_hub/FrontEnd/Student/shareFeedback.dart';
 import 'package:quiz_hub/FrontEnd/Teacher/createExam.dart';
 import 'package:quiz_hub/FrontEnd/Teacher/reviewResults.dart';
+import 'package:quiz_hub/FrontEnd/Teacher/teacherFeedback.dart';
 import 'package:quiz_hub/FrontEnd/WelcomePage.dart';
+import 'package:quiz_hub/localStorage/local_storage.dart';
 import 'package:quiz_hub/models/constants.dart';
 import 'package:quiz_hub/models/NavBar.dart';
 import 'package:quiz_hub/models/navBarTeacher.dart';
@@ -18,7 +20,57 @@ class TeacherDashboard extends StatefulWidget {
 
 class _TeacherDashboardState extends State<TeacherDashboard> {
 
+  localStorage local_storage = localStorage();
+
+  late String _teacherName;
+
   Constants constants = Constants();
+
+  //function for getting teacher name
+  Future<void> getTeacherName() async{
+    var login_response = await localStorage().getUser();
+    _teacherName = login_response.name.toString();
+  }
+
+  @override
+  void initState() {
+    getTeacherName();
+    super.initState();
+  }
+
+  // Function to show logout confirmation dialog
+  Future<void> _showLogoutConfirmationDialog() async {
+    return showDialog<void>(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Logout Confirmation'),
+          content: const Text('Are you sure you want to logout?'),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                // Close the dialog
+                Navigator.of(context).pop();
+              },
+              child: const Text('No'),
+            ),
+            TextButton(
+              onPressed: () {
+                // Perform logout logic here
+                Navigator.of(context).pop(); // Close the dialog
+                // Add your logout code here
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const WelcomePage()),
+                );
+              },
+              child: const Text('Yes'),
+            ),
+          ],
+        );
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -162,7 +214,7 @@ class _TeacherDashboardState extends State<TeacherDashboard> {
                   //link to go to next screen
                   GestureDetector(
                     onTap: (){
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => GetResult(),
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => CreateExam(),
                       ),
                       );
                     },
@@ -248,7 +300,7 @@ class _TeacherDashboardState extends State<TeacherDashboard> {
                   //link to go to next screen
                   GestureDetector(
                     onTap: (){
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => const WelcomePage(),
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => TeacherFeedback(teacherName: _teacherName),
                       ),
                       );
                     },
@@ -334,9 +386,7 @@ class _TeacherDashboardState extends State<TeacherDashboard> {
                   //link to go to next screen
                   GestureDetector(
                     onTap: (){
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => const WelcomePage(),
-                      ),
-                      );
+                      _showLogoutConfirmationDialog();
                     },
                     child:  const Icon(Icons.arrow_forward, color: Colors.white, size: 50),
                   ),
