@@ -80,6 +80,18 @@ TextStyle(
   fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white,
 );
 
+//feedback text style
+const feedbackTextStyle =
+TextStyle(
+  fontSize: 18, fontWeight: FontWeight.w600, color: Color(0xff8523D9),
+);
+
+//paragraph text style
+const buttonTextStyle =
+TextStyle(
+  fontSize: 16, fontWeight: FontWeight.bold, color: Colors.white,
+);
+
 const ThinTextStyle =
 TextStyle(fontSize: 16, fontWeight: FontWeight.w300, color: Color(0xff8523D9));
 

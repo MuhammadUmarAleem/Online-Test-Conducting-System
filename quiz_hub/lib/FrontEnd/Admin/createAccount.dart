@@ -47,6 +47,7 @@ class _CreateUserAccountState extends State<CreateUserAccount> {
 
         //if user register successfully
         if (registerUser.statusCode == 201) {
+          // _showSuccessPopup(context);
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               duration: Duration(seconds: 2),
@@ -82,6 +83,29 @@ class _CreateUserAccountState extends State<CreateUserAccount> {
       );
     }
   }
+
+  // Function to show the success popup
+  void _showSuccessPopup(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('User Registration'),
+          content: Text('User Registered Successfully'),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+                // You can navigate to another screen or perform any other action here
+              },
+              child: Text('OK'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
 
   @override
   Widget build(BuildContext context) {

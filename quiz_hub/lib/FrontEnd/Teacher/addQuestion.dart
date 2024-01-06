@@ -30,9 +30,15 @@ class _AddQuestionState extends State<AddQuestion> {
 
   UploadQuestion() async{
     if(_formKey.currentState!.validate()){
+      if (radioOption == null) {
+        _showErrorPopup(context, "Please select at least one option as correct");
+        return;
+      }
+
       setState(() {
         _isLoading = true;
       });
+
       Map<String, dynamic> questionMap = {
         "Question" : question,
         "Option1" : option1,
@@ -53,19 +59,45 @@ class _AddQuestionState extends State<AddQuestion> {
       // Increment clicks when a question is added
       totalAddedQuestions++;
       // Check if the number of clicks equals totalQuestions
-      if (totalAddedQuestions == widget.totalQuestions) {
+      if (totalAddedQuestions == widget.totalQuestions - 1) {
         // Disable "Add Question" button and enable "Submit" button
         setState(() {
           addQuestionButtonDisabled = true;
           submitButtonDisabled = false;
         });
       }
+      if (totalAddedQuestions == widget.totalQuestions) {
+        // Call _showSuccessPopup only when all questions are added
+        _showSuccessPopup(context);
+      }
     }
+  }
+
+  // Function to show the error popup
+  void _showErrorPopup(BuildContext context, String message) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Error'),
+          content: Text(message),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Text('OK'),
+            ),
+          ],
+        );
+      },
+    );
   }
 
   bool addQuestionButtonDisabled = false;
   bool submitButtonDisabled = true;
 
+  // Function to show the success popup
   // Function to show the success popup
   void _showSuccessPopup(BuildContext context) {
     showDialog(
@@ -114,219 +146,230 @@ class _AddQuestionState extends State<AddQuestion> {
               //Create Exam
               Form(
                 key: _formKey,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
+                child: SingleChildScrollView(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
 
-                    //Question Description
-                    Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 10),
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(5),
-                      ),
-
-                      child: TextFormField(
-                        validator: (val) => val!.isEmpty ? "Enter Question Description" : null,
-                        decoration: const InputDecoration(
-                          hintText: "Question Description",
+                      //Question Description
+                      Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 10),
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(5),
                         ),
-                        onChanged: (value){
-                          question = value;
-                        },
-                      ),
-                    ),
 
-                    const SizedBox(height: 10),
-
-                    //Option1
-                    Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 10),
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(5),
-                      ),
-                      child: Row(
-                        children: [
-                          Expanded(
-                            child: TextFormField(
-                              validator: (val) => val!.isEmpty ? "Enter Option 1" : null,
-                              onChanged: (opt1){
-                                option1 = opt1;
-                              },
-                              decoration: const InputDecoration(
-                                hintText: "Option 1",
-                              ),
-                            ),
+                        child: TextFormField(
+                          validator: (val) => val!.isEmpty ? "Enter Question Description" : null,
+                          decoration: const InputDecoration(
+                            hintText: "Question Description",
                           ),
-                          Radio(
-                            value: 1,
-                            groupValue: radioOption,
-                            onChanged: (value) {
-                              setState(() {
-                                radioOption = value;
-                                trueOption = option1;
-                              });
-                            },
-                          ),
-                        ],
-                      ),
-                    ),
-
-                    const SizedBox(height: 10),
-
-                    //Option 2
-                    Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 10),
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(5),
-                      ),
-                      child: Row(
-                        children: [
-                          Expanded(
-                            child: TextFormField(
-                              validator: (val) => val!.isEmpty ? "Enter Option 2" : null,
-                              onChanged: (opt2){
-                                option2 = opt2;
-                              },
-                              decoration: const InputDecoration(
-                                hintText: "Option 2",
-                              ),
-                            ),
-                          ),
-                          Radio(
-                            value: 2,
-                            groupValue: radioOption,
-                            onChanged: (value) {
-                              setState(() {
-                                radioOption = value;
-                                trueOption = option2;
-                              });
-                            },
-                          ),
-                        ],
-                      ),
-                    ),
-
-                    SizedBox(height: 10),
-
-                    //Option 3
-                    Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 10),
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(5),
-                      ),
-                      child: Row(
-                        children: [
-                          Expanded(
-                            child: TextFormField(
-                              validator: (val) => val!.isEmpty ? "Enter Option 3" : null,
-                              onChanged: (opt3){
-                                option3 = opt3;
-                              },
-                              decoration: const InputDecoration(
-                                hintText: "Option 3",
-                              ),
-                            ),
-                          ),
-                          Radio(
-                            value: 3,
-                            groupValue: radioOption,
-                            onChanged: (value) {
-                              setState(() {
-                                radioOption = value;
-                                trueOption = option3;
-                              });
-                            },
-                          ),
-                        ],
-                      ),
-                    ),
-
-                    SizedBox(height: 10),
-
-                    //Option 4
-                    Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 10),
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(5),
-                      ),
-                      child: Row(
-                        children: [
-                          Expanded(
-                            child: TextFormField(
-                              validator: (val) => val!.isEmpty ? "Enter Option 4" : null,
-                              onChanged: (opt4){
-                                option4 = opt4;
-                              },
-                              decoration: const InputDecoration(
-                                hintText: "Option 4",
-                              ),
-                            ),
-                          ),
-                          Radio(
-                            value: 4,
-                            groupValue: radioOption,
-                            onChanged: (value) {
-                              setState(() {
-                                radioOption = value;
-                                trueOption = option4;
-                              });
-                            },
-                          ),
-                        ],
-                      ),
-                    ),
-
-                    SizedBox(height: 10),
-
-                    Row(
-                      children: [
-                        //submit exam button
-                        // if(widget.totalQuestions ==    )
-                        GestureDetector(
-                          onTap: (){
-                            submitButtonDisabled ? null :
-                            _showSuccessPopup(context);
-                            Navigator.push(context, MaterialPageRoute(builder: (context) => TeacherDashboard(),),);
+                          onChanged: (value){
+                            question = value;
                           },
-                          child:  Container(
-                              alignment: Alignment.center,
-                              padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-                              // width: double.infinity,
-                              decoration: BoxDecoration(
-
-                                borderRadius: BorderRadius.circular(100),
-                                color: constants.darkPurple,
-                              ),
-                              child: Text('Submit Exam', style: TextStyle18,)
-                          ),
                         ),
+                      ),
 
-                        SizedBox(width: 10,),
-                        //Add Question button
-                        GestureDetector(
-                          onTap: (){
-                            addQuestionButtonDisabled ? null : UploadQuestion();
-                          },
-                          child:  Container(
-                              alignment: Alignment.center,
-                              padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-                              decoration: BoxDecoration(
+                      const SizedBox(height: 10),
 
-                                borderRadius: BorderRadius.circular(100),
-                                color: constants.darkPurple,
-                              ),
-                              child: Text('Add Question', style: TextStyle18,)
-                          ),
+                      //Option1
+                      Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 10),
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(5),
                         ),
-                      ],
-                    ),
-                    SizedBox(height: 10),
-                  ],
+                        child: Row(
+                          children: [
+                            Expanded(
+                              child: TextFormField(
+                                validator: (val) => val!.isEmpty ? "Enter Option 1" : null,
+                                onChanged: (opt1){
+                                  option1 = opt1;
+                                },
+                                decoration: const InputDecoration(
+                                  hintText: "Option 1",
+                                ),
+                              ),
+                            ),
+                            Radio(
+                              value: 1,
+                              groupValue: radioOption,
+                              onChanged: (value) {
+                                setState(() {
+                                  radioOption = value;
+                                  trueOption = option1;
+                                });
+                              },
+                            ),
+                          ],
+                        ),
+                      ),
+
+                      const SizedBox(height: 10),
+
+                      //Option 2
+                      Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 10),
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(5),
+                        ),
+                        child: Row(
+                          children: [
+                            Expanded(
+                              child: TextFormField(
+                                validator: (val) => val!.isEmpty ? "Enter Option 2" : null,
+                                onChanged: (opt2){
+                                  option2 = opt2;
+                                },
+                                decoration: const InputDecoration(
+                                  hintText: "Option 2",
+                                ),
+                              ),
+                            ),
+                            Radio(
+                              value: 2,
+                              groupValue: radioOption,
+                              onChanged: (value) {
+                                setState(() {
+                                  radioOption = value;
+                                  trueOption = option2;
+                                });
+                              },
+                            ),
+                          ],
+                        ),
+                      ),
+
+                      SizedBox(height: 10),
+
+                      //Option 3
+                      Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 10),
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(5),
+                        ),
+                        child: Row(
+                          children: [
+                            Expanded(
+                              child: TextFormField(
+                                validator: (val) => val!.isEmpty ? "Enter Option 3" : null,
+                                onChanged: (opt3){
+                                  option3 = opt3;
+                                },
+                                decoration: const InputDecoration(
+                                  hintText: "Option 3",
+                                ),
+                              ),
+                            ),
+                            Radio(
+                              value: 3,
+                              groupValue: radioOption,
+                              onChanged: (value) {
+                                setState(() {
+                                  radioOption = value;
+                                  trueOption = option3;
+                                });
+                              },
+                            ),
+                          ],
+                        ),
+                      ),
+
+                      SizedBox(height: 10),
+
+                      //Option 4
+                      Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 10),
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(5),
+                        ),
+                        child: Row(
+                          children: [
+                            Expanded(
+                              child: TextFormField(
+                                validator: (val) => val!.isEmpty ? "Enter Option 4" : null,
+                                onChanged: (opt4){
+                                  option4 = opt4;
+                                },
+                                decoration: const InputDecoration(
+                                  hintText: "Option 4",
+                                ),
+                              ),
+                            ),
+                            Radio(
+                              value: 4,
+                              groupValue: radioOption,
+                              onChanged: (value) {
+                                setState(() {
+                                  radioOption = value;
+                                  trueOption = option4;
+                                });
+                              },
+                            ),
+                          ],
+                        ),
+                      ),
+
+                      SizedBox(height: 10),
+
+                      Row(
+                        children: [
+                          // Submit Exam button
+                          GestureDetector(
+                            onTap: () {
+                              if (!submitButtonDisabled) {
+                                  UploadQuestion();
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => TeacherDashboard()),
+                                  );
+                                }
+                            },
+                            child: Container(
+                              alignment: Alignment.center,
+                              padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(100),
+                                color: submitButtonDisabled ? Colors.grey : constants.darkPurple,
+                              ),
+                              child: Text('Submit Exam', style: buttonTextStyle),
+                            ),
+                          ),
+
+                          SizedBox(width: 10),
+
+                          // Add Question button
+                          GestureDetector(
+                            onTap: () {
+                              if (!addQuestionButtonDisabled) {
+                                if (radioOption == null) {
+                                  _showErrorPopup(context,
+                                      "Please select at least one option as correct");
+                                } else {
+                                  UploadQuestion();
+                                }
+                              }
+                            },
+                            child: Container(
+                              alignment: Alignment.center,
+                              padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(100),
+                                color: addQuestionButtonDisabled ? Colors.grey : constants.darkPurple,
+                              ),
+                              child: Text('Add Question', style: buttonTextStyle),
+                            ),
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: 10),
+                    ],
+                  ),
                 ),
               ),
             ],

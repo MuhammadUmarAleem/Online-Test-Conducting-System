@@ -78,7 +78,6 @@ class _studentDashboardState extends State<studentDashboard> {
         ),
 
       ),
-
       body: Column(
         children: [
           Container(
@@ -102,20 +101,23 @@ class _studentDashboardState extends State<studentDashboard> {
               ),
               margin: const EdgeInsets.all(10.0),
               padding: const EdgeInsets.all(15.0),
-              child: Row(
-                children: [
-                  RichText(
-                    text: const TextSpan(
-                      text: 'Learning made easy with\n',
-                      style: TextStyle(fontSize: 18),
-                      children: <TextSpan>[
-                        TextSpan(text: 'QuizHub',
-                            style: TextStyle(fontSize: 50, fontWeight: FontWeight.bold)),
-                      ],
+              child: SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Row(
+                  children: [
+                    RichText(
+                      text: const TextSpan(
+                        text: 'Learning made easy with\n',
+                        style: TextStyle(fontSize: 18),
+                        children: <TextSpan>[
+                          TextSpan(text: 'QuizHub',
+                              style: TextStyle(fontSize: 50, fontWeight: FontWeight.bold)),
+                        ],
+                      ),
                     ),
-                  ),
-                  const Image(image: AssetImage("assets/images/graduation_cap_on_books_stack.png"),),
-                ],
+                    const Image(image: AssetImage("assets/images/graduation_cap_on_books_stack.png"),),
+                  ],
+                ),
               )
           ),
 
@@ -300,10 +302,8 @@ class _studentDashboardState extends State<studentDashboard> {
               ],
             ),
           ),
-
         ],
       ),
-
     );
   }
 }

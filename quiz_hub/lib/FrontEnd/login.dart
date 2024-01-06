@@ -1,55 +1,58 @@
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:quiz_hub/FrontEnd/Admin/adminDashboard.dart';
 import 'package:quiz_hub/FrontEnd/Student/studentDashboard.dart';
 import 'package:quiz_hub/FrontEnd/Teacher/TeacherDashboard.dart';
-import 'package:quiz_hub/FrontEnd/signup.dart';
 import 'package:quiz_hub/Services/APICalls.dart';
 import 'package:quiz_hub/models/loginResponse.dart';
 import 'package:quiz_hub/models/loginRole.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-
 import '../models/constants.dart';
-
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
 
   @override
   State<LoginScreen> createState() => _LoginScreenState();
 }
-
 class _LoginScreenState extends State<LoginScreen> {
-
+  //making constant object to style text and colors
   Constants constants = Constants();
+  //create api calls object to manage api
   APICalls loginAPI = APICalls();
-
+  //making controller variables to manage text fields
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   TextEditingController confirmPasswordController = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-
-  //list for saving previously logged in emails
-  List<String> enteredEmails = [];
-
+  //function for handling login response
   void _login() async {
+
+    //validating form key
     if (_formKey.currentState!.validate()) {
-try{
-      loginResponse response = await loginAPI.loginAPI(emailController.text, passwordController.text);
+      try {
+        //calling api for login
+        loginResponse response = await loginAPI.loginAPI(
+            emailController.text, passwordController.text);
 
-      roleLogin userRole = await loginAPI.getUserRole(response.token!);
-      if(userRole.data!.role == "Admin"){
-      Navigator.push(context, MaterialPageRoute(builder: (context) => const AdminDashboard()));
-      }else if(userRole.data!.role == "Teacher"){
-        Navigator.push(context, MaterialPageRoute(builder: (context) => const TeacherDashboard()));
-      }else if(userRole.data!.role == "Student"){
-        Navigator.push(context, MaterialPageRoute(builder: (context) => const studentDashboard()));
+        roleLogin userRole = await loginAPI.getUserRole(response.token!);
+        //checking user role
+        if (userRole.data!.role == "Admin") {
+          Navigator.push(context,
+              MaterialPageRoute(builder: (context) => const AdminDashboard()));
+        } else if (userRole.data!.role == "Teacher") {
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => const TeacherDashboard()));
+        } else if (userRole.data!.role == "Student") {
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => const studentDashboard()));
+        }
+      } catch (err) {
+        ScaffoldMessenger.of(context)
+            .showSnackBar(SnackBar(content: Text(err.toString())));
       }
-
-      // Navigator.push(context, MaterialPageRoute(builder: (context) => const studentDashboard()));
-    }catch(err){
-  ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(err.toString())));
     }
-}
   }
 
   @override
@@ -67,46 +70,45 @@ try{
           padding: const EdgeInsets.all(15.0),
           child: Column(
             children: [
-
-              const Text('QuizHub',
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 45, color: Color(0xff8523D9)),
+              const Text(
+                'QuizHub',
+                style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 45,
+                    color: Color(0xff8523D9)),
               ),
               const SizedBox(height: 25),
-
               RichText(
                 text: const TextSpan(
                   children: [
                     TextSpan(
                       text: "Stay Connected \n",
-                      style:NormalTextStyle,
+                      style: NormalTextStyle,
                     ),
                     TextSpan(
                       text:
-                      "Enter your email address and password to get access to your account ",
+                          "Enter your email address and password to get access to your account ",
                       style: ThinTextStyle,
                     ),
                   ],
                 ),
                 textAlign: TextAlign.left,
               ),
-
               const SizedBox(height: 25),
-
               //logo placement
               const Center(
-                child: Image(image: AssetImage('assets/images/login_authentication.png'),
-                  height: 200 ,),
+                child: Image(
+                  image: AssetImage('assets/images/login_authentication.png'),
+                  height: 200,
+                ),
               ),
-
               const SizedBox(height: 30),
-
               //sign up form
               Form(
                 key: _formKey,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-
                     //email input field
                     Container(
                       padding: const EdgeInsets.symmetric(horizontal: 10),
@@ -114,7 +116,6 @@ try{
                         color: Colors.white,
                         borderRadius: BorderRadius.circular(5),
                       ),
-
                       child: TextFormField(
                         keyboardType: TextInputType.emailAddress,
                         textInputAction: TextInputAction.next,
@@ -123,15 +124,14 @@ try{
                           return value!.isEmpty
                               ? 'Please, Enter Email Address'
                               : AppConstants.emailRegex.hasMatch(value)
-                              ? null
-                              : 'Invalid Email Address';
+                                  ? null
+                                  : 'Invalid Email Address';
                         },
                         controller: emailController,
                         decoration: const InputDecoration(
                           hintText: "Email",
                         ),
                       ),
-
                     ),
                     const SizedBox(height: 10),
 
@@ -149,14 +149,13 @@ try{
                           return value!.isEmpty
                               ? 'Please, Enter Password'
                               : null;
-                              // : 'Invalid Password';
+                          // : 'Invalid Password';
                         },
                         controller: passwordController,
                         obscureText: true,
                         decoration: const InputDecoration(
                           hintText: "Password",
                         ),
-
                       ),
                     ),
 
@@ -164,22 +163,24 @@ try{
 
                     ElevatedButton(
                       onPressed: _login,
-                      style:
-                      ElevatedButton.styleFrom(
+                      style: ElevatedButton.styleFrom(
                         //Change font size
                         textStyle: const TextStyle(
                           height: 0.5,
                           fontSize: 22,
-                        ), backgroundColor: constants.darkPurple,
+                        ),
+                        backgroundColor: constants.darkPurple,
                         padding: const EdgeInsets.symmetric(vertical: 15),
                       ),
-                        child: const Center(child: Text('Login', style: TextStyle18,)
-                        ),
+                      child: const Center(
+                          child: Text(
+                        'Login',
+                        style: TextStyle18,
+                      )),
                     ),
                   ],
                 ),
               ),
-
             ],
           ),
         ),

@@ -19,6 +19,10 @@ class _TeacherFeedbackState extends State<TeacherFeedback> {
   //form validation
   final _formKey = GlobalKey<FormState>();
 
+  //feedback subject selection
+  List<String> examTitleOptions = ["AI", "SE", "PPSD", "CN", "MAD"];
+  String? selectedExamTitle;
+
   FeedbackHandlerSQLite? feedbackHandler;
 
   @override
@@ -64,7 +68,7 @@ class _TeacherFeedbackState extends State<TeacherFeedback> {
         child: Column(
           children: [
             SizedBox(
-              height: 50,
+              height: 40,
             ),
             //Main Heading
             Center(
@@ -80,35 +84,70 @@ class _TeacherFeedbackState extends State<TeacherFeedback> {
               ),
             ),
             SizedBox(
-              height: 30,
+              height: 20,
             ),
             Text(
               "Please share result feedback with the students",
-              style: NormalTextStylePurple,
+              style: feedbackTextStyle,
             ),
             SizedBox(
-              height: 30,
+              height: 20,
             ),
 
             // Add a TextField for user input
             Form(
                 key: _formKey,
-                child: TextFormField(
-                  controller: _feedbackController,
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please enter feedback';
-                    }
-                  },
-                  decoration: InputDecoration(
-                      filled: true,
-                      fillColor: Colors.white,
-                      hintText: 'Type here...',
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(25),
-                      )),
-                  maxLines: 20,
-                  // ...
+                child: Column(
+                  children: [
+                    //Feedback Subject Title field
+                    Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 10),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(5),
+                      ),
+                      child: DropdownButtonFormField(
+                        value: selectedExamTitle,
+                        onChanged: (value) {
+                          setState(() {
+                            selectedExamTitle = value;
+                          });
+                        },
+                        items: examTitleOptions.map((title) {
+                          return DropdownMenuItem(
+                            value: title,
+                            child: Text(title),
+                          );
+                        }).toList(),
+                        validator: (value) =>
+                        value!.isEmpty ? "Select Exam Title" : null,
+                        decoration: const InputDecoration(
+                          hintText: "Exam Title",
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+
+                    TextFormField(
+                      controller: _feedbackController,
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please enter feedback';
+                        }
+                      },
+                      decoration: InputDecoration(
+                          filled: true,
+                          fillColor: Colors.white,
+                          hintText: 'Type here...',
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(25),
+                          )),
+                      maxLines: 15,
+                      // ...
+                    ),
+                  ],
                 )),
             SizedBox(
               height: 20,
@@ -120,7 +159,7 @@ class _TeacherFeedbackState extends State<TeacherFeedback> {
                     .insert(
                   FeedbackModel(
                       teacherName: '${widget.teacherName}',
-                      title: 'AI',
+                      title: selectedExamTitle.toString(),
                       description: _feedbackController.text),
                 )
                     .then((value) {

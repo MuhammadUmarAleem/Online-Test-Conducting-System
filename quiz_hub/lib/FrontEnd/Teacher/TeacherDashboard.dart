@@ -19,11 +19,11 @@ class TeacherDashboard extends StatefulWidget {
 }
 
 class _TeacherDashboardState extends State<TeacherDashboard> {
-
+  //object for local storage
   localStorage local_storage = localStorage();
-
+  //teacher name for fetching
   late String _teacherName;
-
+  //making constant object to style text and colors
   Constants constants = Constants();
 
   //function for getting teacher name
@@ -123,20 +123,23 @@ class _TeacherDashboardState extends State<TeacherDashboard> {
                 ),
                 margin: const EdgeInsets.all(10.0),
                 padding: const EdgeInsets.all(15.0),
-                child: Row(
-                  children: [
-                    RichText(
-                      text: const TextSpan(
-                        text: 'Learning made easy with\n',
-                        style: TextStyle(fontSize: 18),
-                        children: <TextSpan>[
-                          TextSpan(text: 'QuizHub',
-                              style: TextStyle(fontSize: 50, fontWeight: FontWeight.bold)),
-                        ],
+                child: SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Row(
+                    children: [
+                      RichText(
+                        text: const TextSpan(
+                          text: 'Learning made easy with\n',
+                          style: TextStyle(fontSize: 18),
+                          children: <TextSpan>[
+                            TextSpan(text: 'QuizHub',
+                                style: TextStyle(fontSize: 50, fontWeight: FontWeight.bold)),
+                          ],
+                        ),
                       ),
-                    ),
-                    const Image(image: AssetImage("assets/images/graduation_cap_on_books_stack.png"),),
-                  ],
+                      const Image(image: AssetImage("assets/images/graduation_cap_on_books_stack.png"),),
+                    ],
+                  ),
                 )
             ),
 
