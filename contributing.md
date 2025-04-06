@@ -1,6 +1,6 @@
-# Contributing to [Online-Test-Conducting-System]
+# Contributing to Online-Test-Conducting-System
 
-Thank you for your interest in contributing to the [Online-Test-Conducting-System]! We welcome contributions from all members of the community.
+Thank you for your interest in contributing to the Online-Test-Conducting-System! We welcome contributions from all members of the community.
 
 ## How to Contribute
 
@@ -26,4 +26,4 @@ We have a [Code of Conduct](https://github.com/MuhammadUmarAleem/Online-Test-Con
 
 ## License
 
-By contributing to [Online-Test-Conducting-System], you agree that your contributions will be licensed under the [Apache] license.
+By contributing to Online-Test-Conducting-System, you agree that your contributions will be licensed under the [Apache] license.
